@@ -4,7 +4,15 @@ import numpy as np
 import pytest
 
 from src.buka_attention.schemas import AoiType, PostSpec
-from src.buka_attention.stats import REST_AOI_NAME, Density, aoi_mask, compute_stats, entropy_norm, top_k_share
+from src.buka_attention.stats import (
+    REST_AOI_NAME,
+    Density,
+    aoi_mask,
+    boxes_outside_image,
+    compute_stats,
+    entropy_norm,
+    top_k_share,
+)
 
 
 def test_aoi_mask_clips_boxes_to_image() -> None:
@@ -57,3 +65,17 @@ def test_compute_stats_summary_marks_absent_types_as_none(density: Density, spec
     assert summary.offer_share_pct is None
     assert summary.clarity == pytest.approx(1 - summary.entropy_norm)
     assert summary.label == "Synthetic"
+
+
+def test_boxes_outside_image_lists_only_boxes_past_the_edge() -> None:
+    spec = PostSpec.model_validate(
+        {
+            "image": "synthetic.png",
+            "aois": {
+                "inside": {"type": "logo", "boxes": [[0, 0, 40, 40]]},
+                "faces": {"type": "face", "boxes": [[5, 5, 10, 10], [30, 30, 45, 38]]},
+                "negative": {"type": "cta", "boxes": [[-1, 0, 5, 5]]},
+            },
+        }
+    )
+    assert boxes_outside_image(spec, 40, 40) == [("faces", (30, 30, 45, 38)), ("negative", (-1, 0, 5, 5))]

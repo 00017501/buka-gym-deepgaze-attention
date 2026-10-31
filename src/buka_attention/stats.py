@@ -28,6 +28,16 @@ def aoi_mask(boxes: list[Box], height: int, width: int) -> Mask:
     return mask
 
 
+def boxes_outside_image(spec: PostSpec, height: int, width: int) -> list[tuple[str, Box]]:
+    """Return `(aoi name, box)` for every box that extends past the image edge; such boxes are clipped."""
+    return [
+        (name, box)
+        for name, aoi in spec.aois.items()
+        for box in aoi.boxes
+        if min(box) < 0 or box[2] > width or box[3] > height
+    ]
+
+
 def entropy_norm(density: Density) -> float:
     """Return the Shannon entropy of the grid-pooled density divided by its maximum; 0..1, lower = more focused."""
     height, width = density.shape

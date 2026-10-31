@@ -44,6 +44,8 @@ to and reproducible from this repo. Values are *predicted* attention, not eye-tr
 ├── results/          # committed outputs cited by the report
 ├── docs/METHOD.md    # method, metric definitions, limitations
 ├── docs/DECISIONS.md # decision log D0..Dn
+├── docs/ADD_A_POST.md # step-by-step guide to analysing a new post or redesign
+├── docs/AI_USE_AND_PROMPTS.md # where generative AI was used, and the prompts
 └── patches/          # patch applied to the DeepGaze clone
 ```
 

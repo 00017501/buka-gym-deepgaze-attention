@@ -88,8 +88,13 @@ non-integer coordinate, stops with a `ValidationError` naming the problem.
 ```
 
 - The first run downloads the model weights, about 1–2 GB.
-- `--only` rewrites `output/stats*.csv` and `output/stats.md` with **only** the
-  posts named in this run. `results/` is not touched.
+- `--only` runs the model and draws heatmaps for the named post only. The tables
+  in `output/` still list every post: the others are recomputed from their saved
+  densities, and a post that has never been run is left out with a warning.
+  `results/` is not touched.
+- A box that extends past the image edge is logged as
+  `WARNING aoi_box_outside_image ...`. Fix that box, because only its part inside
+  the image counts.
 
 Open `output/heatmaps/post6_class_schedule_aoi.png`, and check that each box
 covers its element and that no boxes overlap. Overlaps show up as the shares
@@ -123,7 +128,8 @@ it the first time a post is run. The before/after table goes to
 
 ## 7. Update the published results
 
-To refresh `results/` with every post, including the new one, run everything:
+To refresh `results/`, `output/` must hold every post. The simplest way is a
+full run:
 
 ```bash
 .venv/bin/python -m src.buka_attention --images images --aois aois.json \

@@ -160,3 +160,22 @@ reason, and the alternatives considered.
   - A `--skip-model` re-run was also identical, and `--only` with `--compare`
     produced `compare.csv` as expected.
 - **Effect:** None on the numbers.
+
+### D16 – Complete tables with `--only`, and a warning for boxes past the edge
+- **Decision:** Two changes to support adding more posts (see ADD_A_POST.md):
+  1. A run with `--only` still runs the model and draws heatmaps only for the named
+     posts. The tables (`stats_*.csv`, `stats.md`) now list **every** post,
+     recomputing the others from their saved density maps. A post with no saved
+     density is left out with a `density_missing` warning. Before this change, the
+     tables held only the posts named in that run.
+  2. An AOI box that extends past the image edge now logs an
+     `aoi_box_outside_image` warning. The box is still clipped to the image, as
+     before.
+- **Why:** With more posts and redesigns, single-post runs are common, and they
+  should not leave partial tables. A box past the edge is almost always an
+  annotation mistake, and before this change it was clipped silently.
+- **Effect:** None on the numbers. The densities are the saved model outputs, so the
+  other posts' rows are exact. A full run, and an `--only post3_trainer_rental`
+  run, both give `stats.md` and both CSVs byte-identical to `results/`, and all 10
+  heatmaps are identical. None of the existing boxes triggers the new warning.
+  Tests: 29 passed, including new tests for both changes.

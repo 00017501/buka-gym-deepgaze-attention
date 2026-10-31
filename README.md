@@ -71,8 +71,10 @@ To analyse another post or a redesign, follow [`docs/ADD_A_POST.md`](docs/ADD_A_
 .venv/bin/python -m src.buka_attention --skip-model --compare post2_taekwondo_kids:post2_v1
 ```
 
-Tables hold only the posts processed in that run, so include both keys of a pair
-when combining `--only` with `--compare`. `--help` lists every flag.
+`--only` runs the model and draws heatmaps only for the named posts. The tables
+still list every post: the others are recomputed from their saved densities in
+`output/density/`, and a post without one is left out with a warning (D16).
+`--help` lists every flag.
 
 | Output (in `--out`) | Content |
 |---|---|
