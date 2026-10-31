@@ -9,3 +9,4 @@ pandas==3.1.0
 matplotlib==3.11.2
 opencv-python==5.0.0.93
 boltons==26.2.0
+pydantic==2.14.2

@@ -1,0 +1,73 @@
+target-version = "py313"
+line-length = 120
+fix = false
+extend-exclude = ["third_party"]
+
+[format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+
+[lint]
+select = [
+    "E",    # pycodestyle errors
+    "W",    # pycodestyle warnings
+    "F",    # Pyflakes
+    "D",    # pydocstyle
+    "ERA",  # commented-out code
+    "TID",  # import tidiness
+    "ARG",  # unused arguments
+    "FIX",  # FIXMEs and TODOs
+    "PL",   # Pylint
+    "I",    # import sorting
+    "B",    # bugbear
+    "Q",    # quotes
+    "C4",   # comprehensions
+    "UP",   # pyupgrade
+    "N",    # pep8-naming
+    "SIM",  # simplifications
+    "RET",  # return consistency
+    "PTH",  # pathlib over os.path
+    "C90",  # McCabe complexity
+    "S",    # Bandit security
+    "RUF",  # Ruff-specific
+    "ANN",  # type annotations
+    "T10",  # leftover debuggers
+    "T20",  # print statements
+]
+ignore = [
+    "D213",    # multi-line summary starts on the first line (D212 style)
+    "D107",    # __init__ docstring optional
+    "PLC0415", # torch is imported lazily so --skip-model runs never load it
+    "ANN401",  # Any allowed in **kwargs
+]
+fixable = ["ALL"]
+unfixable = []
+
+[lint.per-file-ignores]
+"tests/**" = [
+    "S101",    # pytest uses assert
+    "D103",    # test names are the documentation
+    "PLR2004", # literal expected values read better in tests
+]
+
+[lint.isort]
+known-first-party = ["src"]
+combine-as-imports = true
+split-on-trailing-comma = false
+
+[lint.pylint]
+max-statements = 50
+
+[lint.flake8-quotes]
+docstring-quotes = "double"
+inline-quotes = "double"
+multiline-quotes = "double"
+
+[lint.pydocstyle]
+convention = "google"
+
+[lint.flake8-import-conventions.aliases]
+numpy = "np"
+pandas = "pd"

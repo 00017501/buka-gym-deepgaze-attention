@@ -1,7 +1,9 @@
 .venv/
 third_party/
-output/
+output*/
 centerbias_mit1003.npy
 *.npy
 __pycache__/
 .DS_Store
+.ruff_cache/
+.pytest_cache/
