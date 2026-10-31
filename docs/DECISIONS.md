@@ -121,3 +121,12 @@ reason, and the alternatives considered.
   Authorship is the student ID 00017501.
 - **Why:** The coursework is marked anonymously and identified by student ID
   only.
+
+### D13 – Code restructured, results unchanged
+- **Decision:** The pipeline script became the package `src/buka_attention/`. It
+  now has type hints, validated AOI files (Pydantic), ruff linting and pytest tests.
+  The smoke test (D6) is now `tests/test_smoke.py`.
+- **Why:** The code is easier to check and extend, and the AOI file is validated on
+  load. The methodology is unchanged.
+- **Effect:** None on the numbers. A full rerun gives densities, CSVs, `stats.md`
+  and heatmaps byte-identical to `results/` and to the previous script.
