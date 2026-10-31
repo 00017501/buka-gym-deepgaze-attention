@@ -1,0 +1,128 @@
+{
+  "key": "post2_v1",
+  "created_utc": "2026-10-31T10:15:31+00:00",
+  "model_requested": "anthropic:claude-opus-5-5",
+  "model_used": "claude-opus-5-5",
+  "effort": "high",
+  "sdk_versions": {
+    "pydantic-ai-slim": "2.64.0",
+    "anthropic": "2.3.0"
+  },
+  "prompt_file": "prompts/aoi_annotation.txt",
+  "prompt_sha256": "850a254284fdece7fd9e579e7e182ec0f10d90734239604826463a70677d3bcb",
+  "prompt_text": "You are annotating areas of interest (AOIs) on a social-media marketing image for an\nattention study. The image is 900 x 1199 pixels.\n\nFind each of these elements if present, and give a tight bounding rectangle for each\nin ORIGINAL image pixel coordinates [x0, y0, x1, y1] (x0,y0 = top-left; x1,y1 = bottom-right):\n- logo: the brand logo or wordmark (include a tagline only if it is part of the logo lock-up)\n- headline: the main title text\n- face: each human face or head (one rectangle per face, grouped under one AOI)\n- offer: the value proposition / price / promotion text (e.g. \"free trial\", \"special offer\")\n- cta: the call to action (e.g. \"details in description\", \"book now\", a button or arrow)\n- body: supporting text blocks (benefit lists, event descriptions)\n- visual: the main product or equipment image, if it is a distinct object\n\nRules:\n1. Omit any element that is not in the image. Do not invent one.\n2. Rectangles must not overlap. If two elements touch, split the boundary between them.\n3. Include a text element's own background panel or banner, but not empty space around it.\n4. Name each AOI with a short lowercase name and give its type from the list above.\n5. Output ONLY valid JSON in this format, with no commentary:\n\n{\"aois\": {\n   \"<name>\": {\"type\": \"<type>\", \"boxes\": [[x0, y0, x1, y1], ...]},\n   ...\n}}\n",
+  "image": "images/post2_v1.png",
+  "image_sha256": "e983f13ea8b1a085a18934377f5999b2d4b78f70b35190c89d99c361be3bfb38",
+  "original_size": [
+    900,
+    1199
+  ],
+  "sent_size": [
+    900,
+    1199
+  ],
+  "scale": 1.0,
+  "request_id": "msg_011Cga95YuQ3Btdmd54YxUYu",
+  "usage": {
+    "input_tokens": 2590,
+    "output_tokens": 356
+  },
+  "raw_reply": {
+    "aois": [
+      {
+        "name": "logo",
+        "type": "logo",
+        "boxes": [
+          {
+            "x0": 48,
+            "y0": 32,
+            "x1": 206,
+            "y1": 138
+          }
+        ]
+      },
+      {
+        "name": "headline",
+        "type": "headline",
+        "boxes": [
+          {
+            "x0": 48,
+            "y0": 128,
+            "x1": 648,
+            "y1": 322
+          },
+          {
+            "x0": 40,
+            "y0": 322,
+            "x1": 400,
+            "y1": 512
+          }
+        ]
+      },
+      {
+        "name": "age",
+        "type": "body",
+        "boxes": [
+          {
+            "x0": 48,
+            "y0": 514,
+            "x1": 420,
+            "y1": 572
+          }
+        ]
+      },
+      {
+        "name": "face",
+        "type": "face",
+        "boxes": [
+          {
+            "x0": 574,
+            "y0": 212,
+            "x1": 772,
+            "y1": 482
+          }
+        ]
+      },
+      {
+        "name": "offer",
+        "type": "offer",
+        "boxes": [
+          {
+            "x0": 33,
+            "y0": 592,
+            "x1": 472,
+            "y1": 912
+          }
+        ]
+      },
+      {
+        "name": "cta",
+        "type": "cta",
+        "boxes": [
+          {
+            "x0": 33,
+            "y0": 940,
+            "x1": 472,
+            "y1": 1072
+          }
+        ]
+      },
+      {
+        "name": "benefits",
+        "type": "body",
+        "boxes": [
+          {
+            "x0": 34,
+            "y0": 1110,
+            "x1": 466,
+            "y1": 1146
+          }
+        ]
+      }
+    ]
+  },
+  "problems": [
+    "logo and headline overlap by 1580 px",
+    "headline and face overlap by 8140 px"
+  ]
+}

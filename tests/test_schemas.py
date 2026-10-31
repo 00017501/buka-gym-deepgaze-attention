@@ -9,11 +9,20 @@ from pydantic import ValidationError
 from src.buka_attention.schemas import PostSpec, load_specs
 from tests.conftest import REPO_ROOT
 
+# The five posts whose AOIs are published and never replaced (D17); redesigns are added alongside them.
+PUBLISHED_POSTS = {
+    "post1_brand_flag",
+    "post2_taekwondo_kids",
+    "post3_trainer_rental",
+    "post4_boxing_open_ring",
+    "post5_special_offer",
+}
+
 
 @pytest.mark.parametrize("relative_path", ["aois.json", "docs/aois_v0_before_overlap_fix.json"])
 def test_repository_aoi_files_load(relative_path: str) -> None:
     specs = load_specs(REPO_ROOT / relative_path)
-    assert len(specs) == 5
+    assert specs.keys() >= PUBLISHED_POSTS
     assert all(spec.aois for spec in specs.values())
 
 

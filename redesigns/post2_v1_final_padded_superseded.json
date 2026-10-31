@@ -1,0 +1,25 @@
+{
+  "source_file": "redesigns/post2_v1_attempt1.png",
+  "source_sha256": "48f8f8ed6cae1188a5eec1952bea39af64979ce55cb0975af61cbadf254c9927",
+  "source_size": [
+    1024,
+    1536
+  ],
+  "output_file": "images/post2_v1.png",
+  "output_sha256": "5be6e4ea36a4b99af9c8c8652350897ea96f3fb3f1b03811861a74d603cb4f36",
+  "output_size": [
+    900,
+    1199
+  ],
+  "method": "fit inside, LANCZOS resize, centred, padded with median border colour",
+  "scale": 0.7805989583333334,
+  "offset": [
+    50,
+    0
+  ],
+  "pad_colour": [
+    9,
+    6,
+    5
+  ]
+}

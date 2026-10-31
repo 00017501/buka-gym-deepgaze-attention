@@ -17,6 +17,9 @@ number and heatmap in the report can be traced and reproduced.
 | `images/` | The five original posts analysed (`*_original.png`, native resolution) |
 | `aois.json` | Areas of interest (AOIs) on each post, proposed by an AI assistant and checked (see `docs/AI_USE_AND_PROMPTS.md`) – final version used for the results |
 | `src/buka_attention/` | Pipeline package: `cli` (entry point), `model` (DeepGaze IIE), `stats` (AOI statistics), `visuals` (heatmaps), `report` (tables), `schemas` (AOI file and output rows) |
+| `src/annotate/` | AOI annotation with Claude (`run`, into `aois_generated/`) and `apply` into `aois.json` |
+| `src/redesign/` | AI redesigns with OpenAI image edits (`generate`, into `redesigns/`) and `finalize` to the post size |
+| `prompts/` | The exact prompts the two scripts send |
 | `tests/` | Unit tests, plus `test_smoke.py`: installation check on a synthetic image |
 | `results/stats.md` | Summary and per-AOI tables (same data as the CSVs) |
 | `results/stats_summary.csv`, `results/stats_aoi.csv` | Machine-readable results |
@@ -39,6 +42,14 @@ number and heatmap in the report can be traced and reproduced.
 | Trainer space rental | 0.9 | 52.6 | n/a | 21.6 | 1.5 | 0.12 | headline > offer > equipment > logo > cta |
 | Boxing open ring | 2.6 | 21.8 | 15.9 | n/a | 0.6 | 0.13 | faces > body > logo > headline > cta |
 | Membership special offer | 7.0 | 27.0 | n/a | 32.1 | 16.2 | 0.14 | logo > offer > headline > cta > dumbbell |
+
+**Step 2: redesign of post 2 (variant B).** The offer and CTA were made the most
+salient elements and the benefit list was cut to one line, with an AI-generated
+redesign (D18). Predicted attention on the offer went from 9.1% to 27.7%, and on
+the CTA from 4.8% to 12.6%; the benefits fell from 26.5% to 0.9%. The face stays
+the first look (D19).
+
+![Original vs variant B](results/post2_A_vs_B.jpg)
 
 Full tables: [`results/stats.md`](results/stats.md). Metric definitions: [`docs/METHOD.md`](docs/METHOD.md#4-metrics).
 

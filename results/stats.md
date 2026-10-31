@@ -11,6 +11,7 @@ _Predicted free-viewing attention from DeepGaze IIE (Linardos et al., 2021). Not
 | Trainer space rental | 0.9 | 52.6 | n/a | 21.6 | 1.5 | 0.12 | 58.5 | headline > offer > equipment > logo > cta |
 | Boxing open ring | 2.6 | 21.8 | 15.9 | n/a | 0.6 | 0.13 | 60.8 | faces > body > logo > headline > cta |
 | Membership special offer | 7.0 | 27.0 | n/a | 32.1 | 16.2 | 0.14 | 63.4 | logo > offer > headline > cta > dumbbell |
+| Taekwondo Kids – variant B | 2.4 | 31.4 | 10.9 | 27.7 | 12.6 | 0.11 | 53.2 | face > headline > cta > offer > logo > benefits |
 
 n/a = element not present in the post.
 
@@ -68,3 +69,29 @@ n/a = element not present in the post.
 | offer | offer | 32.1 | 6.7 | 4.81 | 2 |
 | cta | cta | 16.2 | 5.4 | 2.99 | 4 |
 | (rest of image) | other | 8.3 | 59.2 | 0.14 |  |
+
+### Taekwondo Kids – variant B
+
+| AOI | Type | % attention | % area | Lift | First-look rank |
+|---|---|---|---|---|---|
+| logo | logo | 2.4 | 1.6 | 1.51 | 5 |
+| headline | headline | 31.4 | 17.6 | 1.79 | 2 |
+| face | face | 10.9 | 5.0 | 2.19 | 1 |
+| offer | offer | 27.7 | 13.0 | 2.13 | 4 |
+| cta | cta | 12.6 | 5.4 | 2.35 | 3 |
+| benefits | body | 0.9 | 1.4 | 0.65 | 6 |
+| (rest of image) | other | 14.1 | 56.0 | 0.25 |  |
+
+## Before / after
+
+| Before | After | Metric | Before | After | Change |
+|---|---|---|---|---|---|
+| post2_taekwondo_kids | post2_v1 | cta_share_pct | 4.80 | 12.60 | 7.80 |
+| post2_taekwondo_kids | post2_v1 | offer_share_pct | 9.14 | 27.67 | 18.52 |
+| post2_taekwondo_kids | post2_v1 | logo_share_pct | n/a | 2.39 | n/a |
+| post2_taekwondo_kids | post2_v1 | face_share_pct | 9.68 | 10.86 | 1.19 |
+| post2_taekwondo_kids | post2_v1 | headline_share_pct | 29.92 | 31.40 | 1.49 |
+| post2_taekwondo_kids | post2_v1 | clarity | 0.11 | 0.11 | -0.00 |
+| post2_taekwondo_kids | post2_v1 | top10_pct | 53.05 | 53.17 | 0.13 |
+| post2_taekwondo_kids | post2_v1 | first_look_order (post2_taekwondo_kids) | face > benefits > headline > offer > cta |  | n/a |
+| post2_taekwondo_kids | post2_v1 | first_look_order (post2_v1) |  | face > headline > cta > offer > logo > benefits | n/a |

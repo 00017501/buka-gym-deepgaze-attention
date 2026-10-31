@@ -1,0 +1,24 @@
+You are annotating areas of interest (AOIs) on a social-media marketing image for an
+attention study. The image is {WIDTH} x {HEIGHT} pixels.
+
+Find each of these elements if present, and give a tight bounding rectangle for each
+in ORIGINAL image pixel coordinates [x0, y0, x1, y1] (x0,y0 = top-left; x1,y1 = bottom-right):
+- logo: the brand logo or wordmark (include a tagline only if it is part of the logo lock-up)
+- headline: the main title text
+- face: each human face or head (one rectangle per face, grouped under one AOI)
+- offer: the value proposition / price / promotion text (e.g. "free trial", "special offer")
+- cta: the call to action (e.g. "details in description", "book now", a button or arrow)
+- body: supporting text blocks (benefit lists, event descriptions)
+- visual: the main product or equipment image, if it is a distinct object
+
+Rules:
+1. Omit any element that is not in the image. Do not invent one.
+2. Rectangles must not overlap. If two elements touch, split the boundary between them.
+3. Include a text element's own background panel or banner, but not empty space around it.
+4. Name each AOI with a short lowercase name and give its type from the list above.
+5. Output ONLY valid JSON in this format, with no commentary:
+
+{"aois": {
+   "<name>": {"type": "<type>", "boxes": [[x0, y0, x1, y1], ...]},
+   ...
+}}

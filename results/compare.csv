@@ -1,0 +1,10 @@
+before,after,metric,before_val,after_val,change
+post2_taekwondo_kids,post2_v1,cta_share_pct,4.7991,12.5994,7.8003
+post2_taekwondo_kids,post2_v1,offer_share_pct,9.1433,27.6665,18.5232
+post2_taekwondo_kids,post2_v1,logo_share_pct,,2.3902,
+post2_taekwondo_kids,post2_v1,face_share_pct,9.675,10.8628,1.1878
+post2_taekwondo_kids,post2_v1,headline_share_pct,29.9176,31.4043,1.4868
+post2_taekwondo_kids,post2_v1,clarity,0.1103,0.1058,-0.0045
+post2_taekwondo_kids,post2_v1,top10_pct,53.0474,53.1732,0.1258
+post2_taekwondo_kids,post2_v1,first_look_order (post2_taekwondo_kids),face > benefits > headline > offer > cta,,
+post2_taekwondo_kids,post2_v1,first_look_order (post2_v1),,face > headline > cta > offer > logo > benefits,

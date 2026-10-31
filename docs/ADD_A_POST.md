@@ -42,12 +42,46 @@ This prints `(width, height)`. For post 2 it prints `(900, 1199)`
 
 ## 3. Generate the AOIs with the AI prompt
 
+**Option A – script (recommended).** Claude annotates the image through the
+API, using the prompt in `prompts/aoi_annotation.txt` (the same text as
+[AI_USE_AND_PROMPTS.md §1b](AI_USE_AND_PROMPTS.md#1b-reusable-prompt-to-replicate-the-annotation)).
+Set your key in your own terminal first, and never paste it anywhere else:
+
+```bash
+export ANTHROPIC_API_KEY=...        # or keep it in a .env file (git-ignored) and run: set -a; source .env; set +a
+.venv/bin/python -m src.annotate run images/post6_class_schedule_original.png
+```
+
+This writes two files and never touches `aois.json`:
+
+- `aois_generated/post6_class_schedule.json`: the proposed entry, with boxes in
+  original pixels. Images with a long edge over 1568 px are downscaled before
+  sending, and the boxes are scaled back.
+- `aois_generated/post6_class_schedule.meta.json`: the audit record. It holds the
+  requested and actual model, effort, the exact prompt and its hash, the image
+  hash, sizes and scale, the request ID, token usage, the raw reply, and any
+  problems found.
+
+Problems (overlaps, boxes past the edge, inverted boxes) are logged as
+warnings. Review the boxes (step 5 shows how), then add the entry:
+
+```bash
+.venv/bin/python -m src.annotate apply aois_generated/post6_class_schedule.json --label "Class schedule"
+```
+
+`apply` refuses keys that already exist in `aois.json` (published AOIs are never
+replaced, D17) and entries that fail the checks. It appends the entry without
+reformatting the rest of the file. The script never overwrites a staging file.
+Delete the file, or use `--out` with another folder, to annotate again.
+
+**Option B – by hand.**
+
 1. Copy the prompt from [AI_USE_AND_PROMPTS.md §1b](AI_USE_AND_PROMPTS.md#1b-reusable-prompt-to-replicate-the-annotation)
    and replace `{WIDTH}` and `{HEIGHT}` with the numbers from step 2.
 2. Give the prompt and the image to a multimodal AI assistant (one image per
    request).
 3. Keep a record for the AI log: the tool and model name, the date, the exact
-   prompt, and the raw reply.
+   prompt, and the raw reply. Then continue with step 4.
 
 The reply is JSON like this:
 

@@ -1,4 +1,8 @@
-# Lint and test tools; not needed to reproduce the results.
+# Lint and test tools, plus the OpenAI SDK (redesigns) and pydantic-ai + Anthropic SDK (AOI annotation);
+# not needed to reproduce the results.
 -r requirements.txt
 ruff==0.17.3
 pytest==9.2.0
+openai==3.42.0
+pydantic-ai-slim[anthropic]==2.64.0
+anthropic==2.3.0

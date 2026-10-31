@@ -16,6 +16,7 @@ Five Buka Gym Instagram posts, saved as PNG at their native export resolution
 | `post3_trainer_rental` | Trainer space rental | 900 × 1185 |
 | `post4_boxing_open_ring` | Boxing open ring event | 900 × 1189 |
 | `post5_special_offer` | Membership special offer (story format) | 900 × 1605 |
+| `post2_v1` | Variant B of post 2: AI redesign, offer and CTA made most salient (D18) | 900 × 1199 |
 
 Images were not resized or cropped. Small interface elements that were part of
 the captured screenshots (a carousel arrow on post 1, an account tag on post 2,

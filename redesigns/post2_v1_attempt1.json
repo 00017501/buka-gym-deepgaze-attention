@@ -1,0 +1,41 @@
+{
+  "name": "post2_v1",
+  "attempt": 1,
+  "created_utc": "2026-10-31T09:56:35+00:00",
+  "sdk_version": "3.42.0",
+  "model": "gpt-image-2.5-sunburst-2026-09-08",
+  "size": "1024x1536",
+  "quality": "high",
+  "input_fidelity": null,
+  "prompt_file": "prompts/post2_v1.txt",
+  "prompt_sha256": "8481435ffd8b4eaf417f4f5265c9db819ea6ba428767a0594d526a86a9f19ecf",
+  "prompt_text": "Edit the first image (an Instagram poster for a children's taekwondo class) into a\nredesigned version. Keep it a 3:4 vertical poster.\n\nKEEP EXACTLY THE SAME, DO NOT CHANGE:\n- The coach photo on the right: same person, same face, same pose, same uniform,\n  same position and size. Do not redraw, retouch or regenerate his face.\n- The dark background, the red brush-stroke style and the colour palette.\n- The headline \"ТХЭКВОНДО KIDS\" and the line \"ДЛЯ ДЕТЕЙ ОТ 5 ЛЕТ\" (same words).\n\nCHANGE ONLY THE LEFT TEXT COLUMN, AS FOLLOWS:\n1. Move the offer \"ПРОБНАЯ ТРЕНИРОВКА БЕСПЛАТНО!\" up, directly under\n   \"ДЛЯ ДЕТЕЙ ОТ 5 ЛЕТ\", and make it the most prominent text block: larger, bold,\n   white on a solid red panel, placed next to the coach's face.\n2. Directly below the offer, turn \"ПОДРОБНОСТИ В ОПИСАНИИ\" into a solid,\n   high-contrast button: a filled bright red rounded rectangle with white bold text\n   and a white down arrow (↓). Same words, nothing added.\n3. Replace the four-item benefit list with ONE short line in small grey text:\n   \"Дисциплина · Сила · Концентрация\". Remove the four icons.\n4. Add the Buka Gym logo from the second image, small, in the top-left corner,\n   above the headline. Use the logo exactly as given; do not redraw it.\n\nRULES:\n- All text is Russian Cyrillic and must be spelled exactly as written above,\n  letter for letter. Do not add any other text, slogans, prices or watermarks.\n- Do not add people, children or new objects.\n- Flat, clean poster layout; no extra effects.\n",
+  "inputs": [
+    {
+      "path": "images/post2_taekwondo_kids_original.png",
+      "sha256": "0a3f1d4524ac840479dbbd0e534a2918f752dede1c736bd70b8fccae6af1734e"
+    },
+    {
+      "path": "redesigns/inputs/buka_logo.png",
+      "sha256": "8f1d8f4cf8942b50f09f706005219dfa4692eca6b6d66903ac0decfcdfaba0d2"
+    }
+  ],
+  "request_id": "req_8951c45d948d4224835fc41d84962804",
+  "response_created": 1793440594,
+  "revised_prompt": null,
+  "usage": {
+    "input_tokens": 1592,
+    "input_tokens_details": {
+      "image_tokens": 1150,
+      "text_tokens": 442
+    },
+    "output_tokens": 1372,
+    "total_tokens": 2964,
+    "output_tokens_details": {
+      "image_tokens": 1372,
+      "text_tokens": 0
+    }
+  },
+  "output_file": "redesigns/post2_v1_attempt1.png",
+  "output_sha256": "48f8f8ed6cae1188a5eec1952bea39af64979ce55cb0975af61cbadf254c9927"
+}

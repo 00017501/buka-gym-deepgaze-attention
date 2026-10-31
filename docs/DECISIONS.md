@@ -179,3 +179,96 @@ reason, and the alternatives considered.
   run, both give `stats.md` and both CSVs byte-identical to `results/`, and all 10
   heatmaps are identical. None of the existing boxes triggers the new warning.
   Tests: 29 passed, including new tests for both changes.
+
+### D17 – Scripted AOI annotation; published AOIs stay fixed
+- **Decision:** AOIs for new posts and redesigns are proposed by a script,
+  `python -m src.annotate run`. It calls Claude (`claude-opus-5-5`, effort `high`)
+  through the API with `pydantic-ai` and native structured output, using the
+  1b prompt from `prompts/aoi_annotation.txt`. The proposal lands in
+  `aois_generated/` with an audit record. A person reviews it, and `apply` then
+  appends it to `aois.json`.
+- **Policy:** The five published posts keep their existing AOIs, because their
+  numbers are already published and those boxes were fixed before the model ran.
+  `apply` refuses any key already in `aois.json`. A re-annotation of a published
+  post is allowed only as a separate robustness check (`--out
+  aois_generated/robustness/`) and never replaces the published boxes.
+- **Details:**
+  - Images with a long edge over 1568 px are downscaled before sending, so the
+    model's coordinates match what it sees. Boxes are scaled back to original
+    pixels, and the scale is logged.
+  - Boxes are checked for overlaps, inverted boxes and boxes past the edge.
+  - Sampling parameters are not sent, and tool use is not forced; both are
+    rejected by this model.
+  - The API key is read only from `ANTHROPIC_API_KEY` and is never logged or
+    stored.
+- **Why:** This replaces copy-pasting into a chat with a run that records the
+  exact prompt, model, settings and raw reply, and keeps a human review step.
+- **Effect:** None on existing results.
+
+### D18 – Variant B of post 2: generation, acceptance and cropping
+- **Decision:**
+  - **Generation:** variant B (`post2_v1`) was generated with
+    `python -m src.redesign generate`, from the prompt `prompts/post2_v1.txt`. The
+    model was `gpt-image-2.5-sunburst-2026-09-08` (`gpt-image-1` had been shut
+    down), quality `high`, size 1024×1536. The inputs were the original post 2 and
+    a crop of the Buka Gym logo from post 4.
+  - **Acceptance:** attempt 1 was checked against rules fixed before generation,
+    and passed all of them. Every Cyrillic line is spelled exactly. The coach's
+    identity, pose and uniform are unchanged; the model re-renders the photo, so
+    it is not pixel-identical. The logo is not redrawn into something else, the
+    benefits are cut to one line, and there is no extra text, people or
+    watermark. Attempt 1 is therefore used. The evidence is in
+    `redesigns/post2_v1_attempt1_check.jpg`, and no further attempts were made.
+  - **Fitting to the post size:** the 2:3 output was cropped to 3:4 by removing
+    172 px from the bottom only, then resized to 900×1199 (`--fit crop`,
+    record `redesigns/post2_v1_final.json`).
+- **Why crop rather than pad:** padding the sides would have shrunk every element
+  to 78% and added dark bands, a size confound in the before/after comparison.
+  Cropping keeps elements at 88% and changes nothing else in the layout. The
+  padded version's record is kept as
+  `redesigns/post2_v1_final_padded_superseded.json`.
+- **Known deviation:** the removed strip contained the embroidered belt name
+  "KARASEV", which the original post also shows. Variant B therefore lacks this
+  small, incidental text. It is not marketing copy and not an AOI, and it sits in
+  a low-attention area of the original. Check image:
+  `redesigns/post2_v1_crop_strip_check.png`.
+- **Timing:** the redesign prompt, the acceptance rules and the crop were all
+  decided before any annotation or heatmap of variant B existed.
+
+### D19 – AOIs for variant B: AI proposal, corrections, and the result
+- **Proposal:** `python -m src.annotate run images/post2_v1.png` (model
+  `claude-opus-5-5`, effort `high`, request `msg_011Cga95YuQ3Btdmd54YxUYu`). The
+  unedited reply is kept as `aois_generated/post2_v1.ai_original.json`, with its
+  record in `aois_generated/post2_v1.meta.json`. The checks flagged two overlaps.
+- **Corrections** (made before any heatmap of variant B existed, by the D8 rule:
+  the face keeps its full box, and text boxes are trimmed or split at the
+  visible boundary):
+  - `logo` `[48, 32, 206, 138]` → `[48, 32, 206, 140]`. It now covers the whole
+    "Train and Win" line and ends where the headline starts.
+  - `headline` first box `[48, 128, 648, 322]` → two boxes,
+    `[48, 142, 648, 212]` (above the face) and `[48, 212, 574, 322]` (beside the
+    face). This removes the 1,580 px overlap with the logo and the 8,140 px
+    overlap with the face.
+  - `age` `[48, 514, 420, 572]` (type `body`) merged into `headline`. In the
+    published AOIs of the original post 2, "ДЛЯ ДЕТЕЙ ОТ 5 ЛЕТ" is part of the
+    headline box, so it is kept the same way for a like-for-like comparison.
+  - Names match the original post 2 (`headline`, `face`, `benefits`, `offer`,
+    `cta`), plus `logo`, which the original post does not have.
+- **Result** (`--only post2_taekwondo_kids post2_v1 --compare
+  post2_taekwondo_kids:post2_v1`, shares sum to 100% for both posts):
+  - offer 9.1% → 27.7%
+  - CTA 4.8% → 12.6%
+  - offer + CTA 13.9% → 40.3%
+  - benefits 26.5% → 0.9%
+  - headline 29.9% → 31.4%
+  - face 9.7% → 10.9%
+  - clarity 0.11 → 0.11, top-10% share 53.0 → 53.2
+  - first look: face > benefits > headline > offer > cta → face > headline > cta
+    > offer > logo > benefits
+  - Both pre-set criteria are met: offer + CTA above 13.9%, and the offer
+    ranked ahead of the benefits in first-look order.
+- **Reading the result:** much of the offer's gain comes from its larger panel
+  (its area grew from 3.9% to 13.0% of the image; lift 2.36 → 2.13). The CTA
+  gained both area (3.1% → 5.4%) and pull per pixel (lift 1.57 → 2.35). The
+  benefits block, which drew a quarter of the attention, is now a single line.
+  These are predicted attention shares, not eye-tracking.

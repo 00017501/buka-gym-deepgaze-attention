@@ -1,0 +1,26 @@
+Edit the first image (an Instagram poster for a children's taekwondo class) into a
+redesigned version. Keep it a 3:4 vertical poster.
+
+KEEP EXACTLY THE SAME, DO NOT CHANGE:
+- The coach photo on the right: same person, same face, same pose, same uniform,
+  same position and size. Do not redraw, retouch or regenerate his face.
+- The dark background, the red brush-stroke style and the colour palette.
+- The headline "ТХЭКВОНДО KIDS" and the line "ДЛЯ ДЕТЕЙ ОТ 5 ЛЕТ" (same words).
+
+CHANGE ONLY THE LEFT TEXT COLUMN, AS FOLLOWS:
+1. Move the offer "ПРОБНАЯ ТРЕНИРОВКА БЕСПЛАТНО!" up, directly under
+   "ДЛЯ ДЕТЕЙ ОТ 5 ЛЕТ", and make it the most prominent text block: larger, bold,
+   white on a solid red panel, placed next to the coach's face.
+2. Directly below the offer, turn "ПОДРОБНОСТИ В ОПИСАНИИ" into a solid,
+   high-contrast button: a filled bright red rounded rectangle with white bold text
+   and a white down arrow (↓). Same words, nothing added.
+3. Replace the four-item benefit list with ONE short line in small grey text:
+   "Дисциплина · Сила · Концентрация". Remove the four icons.
+4. Add the Buka Gym logo from the second image, small, in the top-left corner,
+   above the headline. Use the logo exactly as given; do not redraw it.
+
+RULES:
+- All text is Russian Cyrillic and must be spelled exactly as written above,
+  letter for letter. Do not add any other text, slogans, prices or watermarks.
+- Do not add people, children or new objects.
+- Flat, clean poster layout; no extra effects.

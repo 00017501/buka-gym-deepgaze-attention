@@ -1,0 +1,24 @@
+{
+  "source_file": "redesigns/post2_v1_attempt1.png",
+  "source_sha256": "48f8f8ed6cae1188a5eec1952bea39af64979ce55cb0975af61cbadf254c9927",
+  "source_size": [
+    1024,
+    1536
+  ],
+  "output_file": "images/post2_v1.png",
+  "output_sha256": "e983f13ea8b1a085a18934377f5999b2d4b78f70b35190c89d99c361be3bfb38",
+  "output_size": [
+    900,
+    1199
+  ],
+  "method": "crop 172 px from the bottom, LANCZOS resize",
+  "scale": 0.87890625,
+  "offset": null,
+  "pad_colour": null,
+  "crop_box": [
+    0,
+    0,
+    1024,
+    1364
+  ]
+}
