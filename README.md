@@ -16,8 +16,8 @@ number and heatmap in the report can be traced and reproduced.
 |---|---|
 | `images/` | The five original posts analysed (`*_original.png`, native resolution) |
 | `aois.json` | Areas of interest (AOIs) drawn on each post – final version used for the results |
-| `src/buka_attention.py` | Pipeline: runs DeepGaze IIE, computes AOI statistics, draws heatmaps |
-| `src/smoke_test.py` | Installation check on a synthetic image |
+| `src/buka_attention/` | Pipeline package: `cli` (entry point), `model` (DeepGaze IIE), `stats` (AOI statistics), `visuals` (heatmaps), `report` (tables), `schemas` (AOI file and output rows) |
+| `tests/` | Unit tests, plus `test_smoke.py`: installation check on a synthetic image |
 | `results/stats.md` | Summary and per-AOI tables (same data as the CSVs) |
 | `results/stats_summary.csv`, `results/stats_aoi.csv` | Machine-readable results |
 | `results/heatmaps/` | `<post>_heatmap.png` and `<post>_aoi.png` (heatmap + AOI boxes + % attention) |
@@ -26,6 +26,7 @@ number and heatmap in the report can be traced and reproduced.
 | `docs/aois_v0_before_overlap_fix.json` | First AOI version, kept for the audit trail |
 | `patches/` | One-line compatibility patch applied to the DeepGaze package |
 | `requirements.txt`, `setup.sh` | Exact environment used |
+| `requirements-dev.txt`, `ruff.toml`, `pytest.ini` | Lint and test tooling (not needed to reproduce) |
 
 ## Results at a glance
 
@@ -45,14 +46,49 @@ Tested on macOS (Apple M4 Pro, CPU inference), Python 3.13.
 
 ```bash
 ./setup.sh                                   # venv, pinned packages, DeepGaze at a fixed commit, centre-bias file
-.venv/bin/python src/smoke_test.py           # should end with "SMOKE TEST PASSED"
-.venv/bin/python src/buka_attention.py --images images --aois aois.json \
+.venv/bin/pip install -r requirements-dev.txt
+.venv/bin/pytest -m slow                     # installation check on a synthetic image
+.venv/bin/python -m src.buka_attention --images images --aois aois.json \
     --out output --centerbias centerbias_mit1003.npy
 ```
 
 The first run downloads about 1–2 GB of pretrained weights into `~/.cache/torch/hub`.
-After editing AOI boxes only, add `--skip-model` to reuse the saved densities.
 Outputs land in `output/`; compare with `results/`.
+
+### Other runs
+
+```bash
+# Only some posts (e.g. a redesign added to aois.json later)
+.venv/bin/python -m src.buka_attention --only post2_taekwondo_kids post2_v1
+
+# Recompute stats and overlays after editing AOI boxes, without re-running the model
+.venv/bin/python -m src.buka_attention --skip-model
+
+# Before/after table for redesigns (pairs of keys from aois.json); writes compare.csv
+.venv/bin/python -m src.buka_attention --skip-model --compare post2_taekwondo_kids:post2_v1
+```
+
+Tables hold only the posts processed in that run, so include both keys of a pair
+when combining `--only` with `--compare`. `--help` lists every flag.
+
+| Output (in `--out`) | Content |
+|---|---|
+| `density/<post>.npy` | Fixation density (H × W, sums to 1) |
+| `heatmaps/<post>_heatmap.png`, `heatmaps/<post>_aoi.png` | Heatmap, and heatmap + AOI boxes with % attention |
+| `stats_aoi.csv` | One row per post × AOI |
+| `stats_summary.csv` | One row per post (entropy, clarity, per-type shares, first-look order) |
+| `stats.md` | The same tables in Markdown |
+| `compare.csv` | Only with `--compare` |
+
+## Development
+
+```bash
+.venv/bin/ruff check . && .venv/bin/ruff format --check .
+.venv/bin/pytest -m "not slow"               # unit tests, no model download
+.venv/bin/pytest                             # everything, including the DeepGaze smoke test
+```
+
+Code conventions: [`.claude/rules/python.md`](.claude/rules/python.md).
 
 ## Licence
 

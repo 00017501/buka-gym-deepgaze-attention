@@ -52,7 +52,7 @@ The first AOI version had two overlaps; it was corrected before the final run
 
 ## 4. Metrics
 
-Computed in `src/buka_attention.py` from the density map `d` (sums to 1):
+Computed in `src/buka_attention/stats.py` from the density map `d` (sums to 1):
 
 | Metric | Definition | Reading |
 |---|---|---|
@@ -82,6 +82,9 @@ Computed in `src/buka_attention.py` from the density map `d` (sums to 1):
 6. Inspected the AOI overlays, corrected two overlapping boxes, and re-computed
    the statistics with `--skip-model` (same density maps, new AOIs).
 7. Exported the tables (`results/stats*.csv`, `results/stats.md`) and heatmaps.
+
+Steps 4–5 used the original single-file scripts. They are now `tests/test_smoke.py`
+and `python -m src.buka_attention`, which give byte-identical outputs (DECISIONS.md, D13).
 
 ## 6. Limitations
 
