@@ -15,6 +15,11 @@ after `./setup.sh` (see the README).
 In the examples below, `post6_class_schedule` is a new post and `post2_v1` is a
 redesign of post 2. Replace them with your own names.
 
+The whole flow at a glance, using post 2 as the example (full walk-through in
+[Worked example](#worked-example-post-2-taekwondo-kids)):
+
+![Pipeline: image, size, AI prompt to JSON, model heatmap, table](img/guide/00_pipeline.jpg)
+
 ## 1. Prepare the image
 
 - Export or screenshot the post at native resolution, about 900 px wide like the
@@ -32,7 +37,8 @@ redesign of post 2. Replace them with your own names.
 .venv/bin/python -c "from PIL import Image; print(Image.open('images/post6_class_schedule_original.png').size)"
 ```
 
-This prints `(width, height)`.
+This prints `(width, height)`. For post 2 it prints `(900, 1199)`
+([example](#step-2--image-size)).
 
 ## 3. Generate the AOIs with the AI prompt
 
@@ -51,6 +57,11 @@ The reply is JSON like this:
    "cta":      {"type": "cta",      "boxes": [[150, 1040, 750, 1120]]}
 }}
 ```
+
+A real reply for post 2, with its boxes drawn on the image next to the boxes
+actually used ([example](#step-3--aoi-prompt-and-reply)):
+
+<img src="img/guide/02_reply_vs_used.jpg" width="500" alt="AI reply boxes vs boxes used">
 
 ## 4. Add the entry to `aois.json`
 
@@ -112,6 +123,12 @@ recompute without re-running the model:
 ```
 
 Record every correction (old box → new box, and why), as was done for D8.
+
+Good vs bad, for post 2 ([example](#step-5--run-then-check-the-boxes)):
+
+| Good: boxes cover their elements, shares sum to 100% | Bad: headline overlaps the face, shares sum to 104.94% |
+|---|---|
+| <img src="img/guide/04_aoi.jpg" width="260" alt="Good boxes"> | <img src="img/guide/05_bad_overlap.jpg" width="260" alt="Overlapping boxes"> |
 
 ## 6. Redesigns: compare with the original
 
