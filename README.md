@@ -22,6 +22,7 @@ number and heatmap in the report can be traced and reproduced.
 | `results/stats_summary.csv`, `results/stats_aoi.csv` | Machine-readable results |
 | `results/heatmaps/` | `<post>_heatmap.png` and `<post>_aoi.png` (heatmap + AOI boxes + % attention) |
 | `docs/METHOD.md` | Step-by-step method, metric definitions, limitations |
+| `docs/ADD_A_POST.md` | Step-by-step guide to analysing a new post or a redesign |
 | `docs/DECISIONS.md` | Decision log: what we chose, why, and the alternatives |
 | `docs/AI_USE_AND_PROMPTS.md` | Where generative AI was used, and the prompts (incl. the AOI annotation prompt) |
 | `docs/aois_v0_before_overlap_fix.json` | First AOI version, kept for the audit trail |
@@ -55,6 +56,7 @@ Tested on macOS (Apple M4 Pro, CPU inference), Python 3.13.
 
 The first run downloads about 1–2 GB of pretrained weights into `~/.cache/torch/hub`.
 Outputs land in `output/`; compare with `results/`.
+To analyse another post or a redesign, follow [`docs/ADD_A_POST.md`](docs/ADD_A_POST.md).
 
 ### Other runs
 
