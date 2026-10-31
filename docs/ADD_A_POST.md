@@ -162,3 +162,110 @@ git push origin main
 
 `output/` and the `.npy` density files are git-ignored on purpose. Commit only
 the copies in `results/`.
+
+---
+
+## Worked example: post 2 (Taekwondo Kids)
+
+Steps 1–7 above, run on a real post. All outputs below are real. The images are
+reduced to 450 px wide for this page.
+
+### Step 1 – the input image
+
+`images/post2_taekwondo_kids_original.png`
+
+<img src="img/guide/01_input.jpg" width="300" alt="Post 2, input image">
+
+### Step 2 – image size
+
+```console
+$ .venv/bin/python -c "from PIL import Image; print(Image.open('images/post2_taekwondo_kids_original.png').size)"
+(900, 1199)
+```
+
+### Step 3 – AOI prompt and reply
+
+The §1b prompt, with the size filled in (only the first lines change):
+
+```
+You are annotating areas of interest (AOIs) on a social-media marketing image for an
+attention study. The image is 900 x 1199 pixels.
+... (rest of the prompt exactly as in AI_USE_AND_PROMPTS.md §1b)
+```
+
+**Example reply (Claude, 31 Oct 2026).** This is a fresh run by an assistant that
+had not seen `aois.json`, given only the image and the prompt above. The reply is
+shown verbatim:
+
+```json
+{"aois": {"headline": {"type": "headline", "boxes": [[55, 90, 645, 170], [45, 170, 566, 468]]}, "face": {"type": "face", "boxes": [[568, 172, 762, 435]]}, "audience": {"type": "body", "boxes": [[88, 470, 398, 522]]}, "benefits": {"type": "body", "boxes": [[75, 540, 402, 878]]}, "offer": {"type": "offer", "boxes": [[78, 922, 406, 1046]]}, "cta": {"type": "cta", "boxes": [[78, 1066, 405, 1165]]}}}
+```
+
+Left: that reply's boxes. Right: the boxes actually used in the study.
+
+![Example reply vs boxes used](img/guide/02_reply_vs_used.jpg)
+
+The two sets differ slightly. The fresh reply split the "for children from 5" line
+into its own `audience` AOI and stepped the headline around the face, so its
+headline share is 20.0% against 29.9%. The face, benefits, offer and CTA shares stay
+within 0.5 points. Differences like this are why the published `aois.json`, not
+the prompt, is what reproduces the numbers.
+
+### Step 4 – the `aois.json` entry and validation
+
+```json
+"post2_taekwondo_kids": {
+  "image": "post2_taekwondo_kids_original.png",
+  "label": "Taekwondo Kids free trial",
+  "aois": {
+    "headline": {"type": "headline", "boxes": [[55, 90, 570, 520]]},
+    "face":     {"type": "face",     "boxes": [[575, 180, 760, 430]]},
+    "benefits": {"type": "body",     "boxes": [[75, 540, 380, 875]]},
+    "offer":    {"type": "offer",    "boxes": [[75, 920, 410, 1045]]},
+    "cta":      {"type": "cta",      "boxes": [[75, 1065, 405, 1165]]}
+  }
+}
+```
+
+```console
+$ .venv/bin/python -c "from pathlib import Path; from src.buka_attention.schemas import load_specs; print(list(load_specs(Path('aois.json'))))"
+['post1_brand_flag', 'post2_taekwondo_kids', 'post3_trainer_rental', 'post4_boxing_open_ring', 'post5_special_offer']
+```
+
+### Step 5 – run, then check the boxes
+
+```console
+$ .venv/bin/python -m src.buka_attention --only post2_taekwondo_kids
+INFO post_started post=post2_taekwondo_kids
+INFO model_loading name=DeepGazeIIE device=cpu
+INFO run_finished out=output posts_run=1 posts_in_tables=5
+
+$ .venv/bin/python -c "import csv; print(round(sum(float(r['share_pct']) for r in csv.DictReader(open('output/stats_aoi.csv')) if r['post']=='post2_taekwondo_kids'), 2))"
+100.0
+```
+
+| `output/heatmaps/post2_taekwondo_kids_heatmap.png` | `output/heatmaps/post2_taekwondo_kids_aoi.png` |
+|---|---|
+| <img src="img/guide/03_heatmap.jpg" width="300" alt="Heatmap"> | <img src="img/guide/04_aoi.jpg" width="300" alt="AOI overlay"> |
+
+**What a bad box looks like.** This is the first version of the boxes
+(`docs/aois_v0_before_overlap_fix.json`). The headline box ran into the face box,
+so the coach's face was counted twice. The shares summed to **104.94%**, and the
+headline took credit for the face hotspot (36.1% instead of 29.9%). The fix moved
+the headline's right edge from 645 to 570 (D8).
+
+<img src="img/guide/05_bad_overlap.jpg" width="300" alt="Overlapping boxes before the fix">
+
+### Step 7 – the resulting table (from `stats.md`)
+
+| AOI | Type | % attention | % area | Lift | First-look rank |
+|---|---|---|---|---|---|
+| headline | headline | 29.9 | 20.5 | 1.46 | 3 |
+| face | face | 9.7 | 4.3 | 2.26 | 1 |
+| benefits | body | 26.5 | 9.5 | 2.79 | 2 |
+| offer | offer | 9.1 | 3.9 | 2.36 | 4 |
+| cta | cta | 4.8 | 3.1 | 1.57 | 5 |
+| (rest of image) | other | 20.0 | 58.8 | 0.34 |  |
+
+The face is predicted to be seen first. The CTA gets 4.8% of attention on 3.1% of
+the area.
