@@ -73,17 +73,11 @@ results are to AOI placement.
 
 ### 1c. Scripted annotation (new posts and redesigns)
 
-`python -m src.annotate run <image>` sends the 1b prompt to Claude (Anthropic)
-through the API, with `pydantic-ai` native structured output.
-
-- **Prompt:** loaded from `prompts/aoi_annotation.txt`. A test keeps that file
-  identical to 1b, and `{WIDTH}`/`{HEIGHT}` are filled with the size actually sent.
-- **Defaults:** model `claude-opus-5-5`, effort `high`.
-- **Output:** the proposal and an audit record (model used, hashes, request ID,
-  tokens, raw reply) in `aois_generated/`.
-- **Policy:** the five published posts keep the 1a boxes (D17).
-
-Commands: [REDESIGN.md §4–6](REDESIGN.md#4-propose-aois).
+The 1b prompt, loaded from `prompts/aoi_annotation.txt`, is sent to Claude
+(Anthropic, `claude-opus-5-5`, effort `high`) by `python -m src.annotate run`. Each
+run keeps an audit record and the raw reply in `aois_generated/`. The five
+published posts keep the 1a boxes (D17). Procedure and example:
+[AOI_GENERATION.md](AOI_GENERATION.md).
 
 ## 2. Analysis code
 

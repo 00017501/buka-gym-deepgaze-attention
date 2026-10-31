@@ -27,6 +27,7 @@ heatmap in the report can be traced and reproduced.
 | `docs/METHOD.md` | Step-by-step method, metric definitions, limitations |
 | `docs/ADD_A_POST.md` | Step-by-step guide to analysing a new post |
 | `docs/REDESIGN.md` | Runbook for AI redesigns: keys, generate, check, finalize, AOIs, compare |
+| `docs/AOI_GENERATION.md` | AOI boxes: AI proposal, checks, review rules, apply, manual alternative |
 | `docs/DECISIONS.md` | Decision log: what we chose, why, and the alternatives |
 | `docs/AI_USE_AND_PROMPTS.md` | Where generative AI was used, and the prompts (incl. the AOI annotation prompt) |
 | `docs/aois_v0_before_overlap_fix.json` | First AOI version, kept for the audit trail |
@@ -67,7 +68,7 @@ Tested on macOS (Apple M4 Pro, CPU inference), Python 3.13.
 
 The first run downloads about 1–2 GB of pretrained weights into `~/.cache/torch/hub`.
 Outputs land in `output/`; compare with `results/`.
-New post: [`docs/ADD_A_POST.md`](docs/ADD_A_POST.md). AI redesign (needs OpenAI and Anthropic API keys): [`docs/REDESIGN.md`](docs/REDESIGN.md).
+New post: [`docs/ADD_A_POST.md`](docs/ADD_A_POST.md). AOI boxes: [`docs/AOI_GENERATION.md`](docs/AOI_GENERATION.md). AI redesign (needs OpenAI and Anthropic API keys): [`docs/REDESIGN.md`](docs/REDESIGN.md).
 
 ### Other runs
 

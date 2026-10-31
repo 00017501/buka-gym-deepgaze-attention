@@ -42,48 +42,19 @@ This prints `(width, height)`. For post 2 it prints `(900, 1199)`
 
 ## 3. Generate the AOIs with the AI prompt
 
-**Option A – script (recommended).** With `ANTHROPIC_API_KEY` set
-([REDESIGN.md §0](REDESIGN.md#0-api-keys)):
+<img src="img/aoi/post2_v1_reviewed.jpg" width="160" align="right" alt="Reviewed AOI boxes">
+
+Claude proposes the boxes, you review them, and `apply` adds them. This replaces
+step 4. Details, options, review rules and examples:
+[AOI_GENERATION.md](AOI_GENERATION.md).
 
 ```bash
-.venv/bin/python -m src.annotate run images/post6_class_schedule_original.png
-```
-
-The proposal goes to `aois_generated/post6_class_schedule.json`, with an audit
-record in `.meta.json`; `aois.json` is not touched. Overlaps and boxes past the
-edge are logged as warnings. Review and fix the boxes as in
-[REDESIGN.md §5](REDESIGN.md#5-review-and-fix-the-boxes), then:
-
-```bash
+.venv/bin/python -m src.annotate run images/post6_class_schedule_original.png      # needs ANTHROPIC_API_KEY
 .venv/bin/python -m src.annotate apply aois_generated/post6_class_schedule.json --label "Class schedule"
 ```
 
-This replaces step 4. `apply` refuses published keys (D17), existing staging
-files are never overwritten, and the details are in
-[AI_USE_AND_PROMPTS.md §1c](AI_USE_AND_PROMPTS.md#1c-scripted-annotation-new-posts-and-redesigns).
-
-**Option B – by hand.**
-
-1. Copy the prompt from [AI_USE_AND_PROMPTS.md §1b](AI_USE_AND_PROMPTS.md#1b-reusable-prompt-to-replicate-the-annotation)
-   and replace `{WIDTH}` and `{HEIGHT}` with the numbers from step 2.
-2. Give the prompt and the image to a multimodal AI assistant (one image per
-   request).
-3. Keep a record for the AI log: the tool and model name, the date, the exact
-   prompt, and the raw reply.
-
-The reply is JSON like this:
-
-```json
-{"aois": {
-   "headline": {"type": "headline", "boxes": [[60, 120, 840, 380]]},
-   "cta":      {"type": "cta",      "boxes": [[150, 1040, 750, 1120]]}
-}}
-```
-
-A real reply for post 2, with its boxes drawn on the image next to the boxes
-actually used ([example](#step-3--aoi-prompt-and-reply)):
-
-<img src="img/guide/02_reply_vs_used.jpg" width="500" alt="AI reply boxes vs boxes used">
+Without the API, give the prompt to any multimodal assistant by hand
+([AOI_GENERATION.md §6](AOI_GENERATION.md#6-manual-alternative)), then go on to step 4.
 
 ## 4. Add the entry to `aois.json`
 
@@ -154,8 +125,10 @@ Good vs bad, for post 2 ([example](#step-5--run-then-check-the-boxes)):
 
 ## 6. Redesigns
 
-To make the redesign itself (keys, generate, checks, finalize, AOIs, compare),
-follow [REDESIGN.md](REDESIGN.md). The comparison command is:
+<img src="img/redesign/a_vs_b.jpg" width="260" align="right" alt="Original vs variant B">
+
+The whole flow (generate an AI redesign, check it, fit it, AOIs, compare) is in
+[REDESIGN.md](REDESIGN.md). The comparison itself:
 
 ```bash
 .venv/bin/python -m src.buka_attention --only post2_taekwondo_kids post2_v1 \
