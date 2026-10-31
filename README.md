@@ -1,9 +1,9 @@
 # Buka Gym – Predicted Visual Attention (DeepGaze IIE)
 
 Supporting repository for the CW1 individual report (Neuromarketing & AI).
-It contains the code, inputs, settings and outputs used to estimate where
-viewers are predicted to look on five Buka Gym Instagram posts, so every
-number and heatmap in the report can be traced and reproduced.
+It holds the code, inputs, settings and outputs behind the predicted attention
+on five Buka Gym Instagram posts and one AI redesign, so every number and
+heatmap in the report can be traced and reproduced.
 
 > **Caveat.** All attention values are *predicted* free-viewing attention from
 > DeepGaze IIE (Linardos et al., 2021). They are not eye-tracking measurements
@@ -25,7 +25,8 @@ number and heatmap in the report can be traced and reproduced.
 | `results/stats_summary.csv`, `results/stats_aoi.csv` | Machine-readable results |
 | `results/heatmaps/` | `<post>_heatmap.png` and `<post>_aoi.png` (heatmap + AOI boxes + % attention) |
 | `docs/METHOD.md` | Step-by-step method, metric definitions, limitations |
-| `docs/ADD_A_POST.md` | Step-by-step guide to analysing a new post or a redesign |
+| `docs/ADD_A_POST.md` | Step-by-step guide to analysing a new post |
+| `docs/REDESIGN.md` | Runbook for AI redesigns: keys, generate, check, finalize, AOIs, compare |
 | `docs/DECISIONS.md` | Decision log: what we chose, why, and the alternatives |
 | `docs/AI_USE_AND_PROMPTS.md` | Where generative AI was used, and the prompts (incl. the AOI annotation prompt) |
 | `docs/aois_v0_before_overlap_fix.json` | First AOI version, kept for the audit trail |
@@ -42,12 +43,11 @@ number and heatmap in the report can be traced and reproduced.
 | Trainer space rental | 0.9 | 52.6 | n/a | 21.6 | 1.5 | 0.12 | headline > offer > equipment > logo > cta |
 | Boxing open ring | 2.6 | 21.8 | 15.9 | n/a | 0.6 | 0.13 | faces > body > logo > headline > cta |
 | Membership special offer | 7.0 | 27.0 | n/a | 32.1 | 16.2 | 0.14 | logo > offer > headline > cta > dumbbell |
+| Taekwondo Kids – variant B (redesign) | 2.4 | 31.4 | 10.9 | 27.7 | 12.6 | 0.11 | face > headline > cta > offer > logo > benefits |
 
-**Step 2: redesign of post 2 (variant B).** The offer and CTA were made the most
-salient elements and the benefit list was cut to one line, with an AI-generated
-redesign (D18). Predicted attention on the offer went from 9.1% to 27.7%, and on
-the CTA from 4.8% to 12.6%; the benefits fell from 26.5% to 0.9%. The face stays
-the first look (D19).
+**Variant B (Step 2):** an AI redesign of post 2 that makes the offer and CTA the
+most salient elements and cuts the benefit list to one line (D18). Offer 9.1% →
+27.7%, CTA 4.8% → 12.6%, benefits 26.5% → 0.9%; the face is still seen first (D19).
 
 ![Original vs variant B](results/post2_A_vs_B.jpg)
 
@@ -67,25 +67,19 @@ Tested on macOS (Apple M4 Pro, CPU inference), Python 3.13.
 
 The first run downloads about 1–2 GB of pretrained weights into `~/.cache/torch/hub`.
 Outputs land in `output/`; compare with `results/`.
-To analyse another post or a redesign, follow [`docs/ADD_A_POST.md`](docs/ADD_A_POST.md).
+New post: [`docs/ADD_A_POST.md`](docs/ADD_A_POST.md). AI redesign (needs OpenAI and Anthropic API keys): [`docs/REDESIGN.md`](docs/REDESIGN.md).
 
 ### Other runs
 
 ```bash
-# Only some posts (e.g. a redesign added to aois.json later)
-.venv/bin/python -m src.buka_attention --only post2_taekwondo_kids post2_v1
-
-# Recompute stats and overlays after editing AOI boxes, without re-running the model
-.venv/bin/python -m src.buka_attention --skip-model
-
-# Before/after table for redesigns (pairs of keys from aois.json); writes compare.csv
-.venv/bin/python -m src.buka_attention --skip-model --compare post2_taekwondo_kids:post2_v1
+.venv/bin/python -m src.buka_attention --only post2_taekwondo_kids post2_v1   # run only these posts
+.venv/bin/python -m src.buka_attention --skip-model                           # reuse saved densities after AOI edits
+.venv/bin/python -m src.buka_attention --skip-model --compare post2_taekwondo_kids:post2_v1   # before/after table
 ```
 
-`--only` runs the model and draws heatmaps only for the named posts. The tables
-still list every post: the others are recomputed from their saved densities in
-`output/density/`, and a post without one is left out with a warning (D16).
-`--help` lists every flag.
+With `--only`, the tables still list every post: the others are recomputed from
+`output/density/`, and a post with no saved density is left out with a warning
+(D16). `--help` lists every flag.
 
 | Output (in `--out`) | Content |
 |---|---|
