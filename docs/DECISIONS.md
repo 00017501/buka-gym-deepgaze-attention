@@ -299,3 +299,14 @@ reason, and the alternatives considered.
 - **Not changed:** the records inside `provenance/` and earlier D entries keep
   the paths they had when written. Read them with the mapping above.
 - **Effect:** None on the numbers. A full re-run gives `results/` byte-identical.
+
+### D22 – Prompts sorted by purpose
+- **Decision:** Prompt files are sorted into folders by purpose, so the names
+  say what each prompt is for:
+  - `prompts/post2_v1.txt` → `prompts/redesign/post2_v1.txt`
+  - `prompts/aoi_annotation.txt` → `prompts/aoi/annotation.txt`
+  - `prompts/README.md` indexes them; `post2_v1` is variant B.
+- **Defaults:** `src.redesign generate` now defaults to
+  `prompts/redesign/<name>.txt`. The post key `post2_v1` is unchanged.
+- **Records:** the texts and their SHA-256 hashes are unchanged, so records in
+  `provenance/` still match them, though they show the old paths.

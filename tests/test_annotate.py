@@ -16,7 +16,7 @@ from src.annotate.reply import AoiReply, find_problems, to_aois
 from src.buka_attention.schemas import Aoi, load_specs
 from tests.conftest import REPO_ROOT
 
-PROMPT_FILE = REPO_ROOT / "prompts" / "aoi_annotation.txt"
+PROMPT_FILE = REPO_ROOT / "prompts" / "aoi" / "annotation.txt"
 
 
 def _fake_model(reply: dict[str, object], seen: list[str] | None = None) -> FunctionModel:

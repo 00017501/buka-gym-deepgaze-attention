@@ -45,7 +45,7 @@ to and reproducible from this repo. Values are *predicted* attention, not eye-tr
 │   ├── posts/        # the five original posts (Buka Gym's, not MIT-licensed)
 │   ├── redesigns/    # finalised AI redesigns that are analysed
 │   └── aois.json     # AOI boxes per image (final version)
-├── prompts/          # exact AI prompts (redesign, AOI annotation)
+├── prompts/          # exact AI prompts: redesign/<key>.txt, aoi/annotation.txt (index: prompts/README.md)
 ├── provenance/       # audit trail, never deleted: AI attempts, raw replies, records, superseded files
 ├── results/          # committed outputs cited by the report
 ├── docs/             # METHOD, DECISIONS (D0..Dn), ANALYSIS_GUIDE, AOI_GENERATION, REDESIGN, AI_USE_AND_PROMPTS

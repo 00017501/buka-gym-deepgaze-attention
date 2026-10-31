@@ -24,7 +24,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     generate = commands.add_parser("generate", help="one OpenAI image-edit attempt (needs OPENAI_API_KEY)")
     generate.add_argument("--name", default="post2_v1", help="redesign key; attempts are <name>_attempt<k>.png")
-    generate.add_argument("--prompt", type=Path, default=Path("prompts/post2_v1.txt"))
+    generate.add_argument("--prompt", type=Path, help="default: prompts/redesign/<name>.txt")
     generate.add_argument(
         "--images", type=Path, nargs="+", help="input images, first is edited (default: post 2 + logo)"
     )
@@ -54,7 +54,8 @@ def _run_generate(args: argparse.Namespace) -> None:
         msg = "OPENAI_API_KEY is not set; export it in your own terminal first"
         raise SystemExit(msg)
     images = args.images or [DEFAULT_ORIGINAL, LOGO_PATH if LOGO_PATH.exists() else crop_logo()]
-    request = EditRequest(args.name, args.prompt, images, args.model, args.size, args.quality, args.input_fidelity)
+    prompt = args.prompt or Path("prompts/redesign") / f"{args.name}.txt"
+    request = EditRequest(args.name, prompt, images, args.model, args.size, args.quality, args.input_fidelity)
     generate_attempt(OpenAI(), request, args.out, args.max_attempts)
 
 

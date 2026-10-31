@@ -31,7 +31,7 @@ Purpose: get an AI edit of the original from a fixed prompt.
 ```
 
 The defaults are for `post2_v1`. For another post, add
-`--name <key> --prompt prompts/<key>.txt --images data/posts/<original>.png redesigns/inputs/buka_logo.png`.
+`--name <key> --images data/posts/<original>.png provenance/redesigns/inputs/buka_logo.png`, with the prompt in `prompts/redesign/<key>.txt`.
 Model: `gpt-image-2.5-sunburst-2026-09-08`, change it with `--model`.
 
 → `provenance/redesigns/<key>_attemptN.png` plus a `.json` record (prompt and its hash,

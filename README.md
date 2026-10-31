@@ -17,7 +17,7 @@ heatmap in the report can be traced and reproduced.
 | **Research inputs** | `data/posts/` | The five original posts (`*_original.png`, native resolution) |
 | | `data/redesigns/` | Finalised AI redesigns that are analysed (`post2_v1.png`, D18) |
 | | `data/aois.json` | Final AOI boxes for every image; image paths are relative to `data/` |
-| | `prompts/` | The exact prompts sent to the AI (redesign, AOI annotation) |
+| | `prompts/` | Exact AI prompts: `redesign/<key>.txt` per redesign, `aoi/annotation.txt` for AOI boxes ([index](prompts/README.md)) |
 | **Research outputs** | `results/` | Everything cited by the report: `stats.md`, `stats_*.csv`, `compare.csv`, `heatmaps/`, `post2_A_vs_B.jpg` |
 | **Audit trail** | `provenance/redesigns/` | Every redesign attempt with its record, the check images, and fit records (including superseded ones) |
 | | `provenance/aois/` | AI AOI proposals (raw and reviewed), their records, and the first AOI version (`aois_v0_before_overlap_fix.json`) |

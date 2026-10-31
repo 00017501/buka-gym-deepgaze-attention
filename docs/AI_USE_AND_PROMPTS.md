@@ -73,7 +73,7 @@ results are to AOI placement.
 
 ### 1c. Scripted annotation (new posts and redesigns)
 
-The 1b prompt, loaded from `prompts/aoi_annotation.txt`, is sent to Claude
+The 1b prompt, loaded from `prompts/aoi/annotation.txt`, is sent to Claude
 (Anthropic, `claude-opus-5-5`, effort `high`) by `python -m src.annotate run`. Each
 run keeps an audit record and the raw reply in `provenance/aois/`. The five
 published posts keep the 1a boxes (D17). Procedure and example:
@@ -129,7 +129,7 @@ repository, in order. They are lightly shortened and personal names are removed.
 
 Variant B of post 2 (offer and CTA made most salient) was made with
 `python -m src.redesign generate` (OpenAI image edits) from
-`prompts/post2_v1.txt`, and accepted by checks fixed in advance. Procedure:
+`prompts/redesign/post2_v1.txt`, and accepted by checks fixed in advance. Procedure:
 [REDESIGN.md](REDESIGN.md).
 
 The run (31 Oct 2026) went as follows:

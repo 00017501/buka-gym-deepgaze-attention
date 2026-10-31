@@ -11,7 +11,7 @@ Decisions: D7, D8, D14, D17, D19.
 
 ## 1. Prompt
 
-`prompts/aoi_annotation.txt` is the single source of the prompt. It is quoted in
+`prompts/aoi/annotation.txt` is the single source of the prompt. It is quoted in
 [AI_USE_AND_PROMPTS.md §1b](AI_USE_AND_PROMPTS.md#1b-reusable-prompt-to-replicate-the-annotation),
 and a test fails if the two differ. `{WIDTH}`/`{HEIGHT}` are filled with the size of
 the image actually sent.

@@ -27,7 +27,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
     run.add_argument("image", type=Path, help="e.g. data/redesigns/post2_v1.png")
     run.add_argument("--key", help="post key (default: image name without _original)")
-    run.add_argument("--prompt", type=Path, default=Path("prompts/aoi_annotation.txt"))
+    run.add_argument("--prompt", type=Path, default=Path("prompts/aoi/annotation.txt"))
     run.add_argument("--model", default=DEFAULT_MODEL)
     run.add_argument("--effort", default=DEFAULT_EFFORT, choices=["low", "medium", "high", "xhigh", "max"])
     run.add_argument("--out", type=Path, default=STAGING_DIR, help="staging folder (robustness runs: a subfolder)")
