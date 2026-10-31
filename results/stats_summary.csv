@@ -1,0 +1,6 @@
+post,label,entropy_norm,clarity,top10_pct,logo_share_pct,cta_share_pct,offer_share_pct,face_share_pct,headline_share_pct,first_look_order
+post1_brand_flag,Brand flag (no offer),0.81,0.19,79.7921,43.7024,,,14.1676,27.4057,tagline > logo > people
+post2_taekwondo_kids,Taekwondo Kids free trial,0.8897,0.1103,53.0474,,4.7991,9.1433,9.675,29.9176,face > benefits > headline > offer > cta
+post3_trainer_rental,Trainer space rental,0.8785,0.1215,58.5016,0.9094,1.4859,21.6458,,52.5629,headline > offer > equipment > logo > cta
+post4_boxing_open_ring,Boxing open ring,0.8686,0.1314,60.7596,2.5914,0.6142,,15.8801,21.8398,faces > body > logo > headline > cta
+post5_special_offer,Membership special offer,0.8588,0.1412,63.3606,7.0259,16.1905,32.1183,,26.9573,logo > offer > headline > cta > dumbbell

@@ -1,0 +1,29 @@
+post,aoi,type,share_pct,area_pct,peak,lift,first_look_rank
+post1_brand_flag,logo,logo,43.7024,10.3003,38.5334,4.2428,2
+post1_brand_flag,tagline,headline,27.4057,1.8418,40.4132,14.8797,1
+post1_brand_flag,people,face,14.1676,8.5071,8.8596,1.6654,3
+post1_brand_flag,(rest of image),other,14.7243,79.3508,10.5916,0.1856,
+post2_taekwondo_kids,headline,headline,29.9176,20.5217,10.0667,1.4578,3
+post2_taekwondo_kids,face,face,9.675,4.286,14.5829,2.2574,1
+post2_taekwondo_kids,benefits,body,26.4645,9.4685,10.8625,2.795,2
+post2_taekwondo_kids,offer,offer,9.1433,3.8805,4.2218,2.3562,4
+post2_taekwondo_kids,cta,cta,4.7991,3.0581,4.1383,1.5693,5
+post2_taekwondo_kids,(rest of image),other,20.0005,58.7851,9.9418,0.3402,
+post3_trainer_rental,logo,logo,0.9094,0.5607,5.1334,1.6219,4
+post3_trainer_rental,headline,headline,52.5629,21.6596,13.2101,2.4268,1
+post3_trainer_rental,offer,offer,21.6458,6.3432,9.3999,3.4125,2
+post3_trainer_rental,cta,cta,1.4859,1.5846,2.3956,0.9377,5
+post3_trainer_rental,equipment,visual,7.2623,18.706,5.1804,0.3882,3
+post3_trainer_rental,(rest of image),other,16.1336,51.1458,12.9163,0.3154,
+post4_boxing_open_ring,logo,logo,2.5914,1.0093,6.4435,2.5676,3
+post4_boxing_open_ring,headline,headline,21.8398,14.8024,3.0989,1.4754,4
+post4_boxing_open_ring,body,body,36.2708,6.0719,13.4202,5.9736,2
+post4_boxing_open_ring,faces,face,15.8801,3.3875,21.8525,4.6878,1
+post4_boxing_open_ring,cta,cta,0.6142,1.8082,0.6374,0.3397,5
+post4_boxing_open_ring,(rest of image),other,22.8037,72.9208,16.7968,0.3127,
+post5_special_offer,logo,logo,7.0259,1.0177,11.4633,6.904,1
+post5_special_offer,headline,headline,26.9573,10.2042,5.4929,2.6418,3
+post5_special_offer,dumbbell,visual,9.4447,17.4455,2.355,0.5414,5
+post5_special_offer,offer,offer,32.1183,6.6753,9.936,4.8115,2
+post5_special_offer,cta,cta,16.1905,5.4084,4.5528,2.9936,4
+post5_special_offer,(rest of image),other,8.2634,59.2489,8.7417,0.1395,

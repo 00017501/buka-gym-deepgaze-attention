@@ -1,0 +1,14 @@
+diff --git a/deepgaze_pytorch/__init__.py b/deepgaze_pytorch/__init__.py
+index d7b2e8f..b25e626 100644
+--- a/deepgaze_pytorch/__init__.py
++++ b/deepgaze_pytorch/__init__.py
+@@ -1,4 +1,8 @@
+ from .deepgaze1 import DeepGazeI
+ from .deepgaze2e import DeepGazeIIE
+ from .deepgaze3 import DeepGazeIII
+-from .deepgazemsdb import DeepGazeMSDB, MSDBDataset
++
++try:
++    from .deepgazemsdb import DeepGazeMSDB, MSDBDataset
++except ImportError:  # MSDB needs OpenAI CLIP; not required for DeepGaze IIE
++    pass

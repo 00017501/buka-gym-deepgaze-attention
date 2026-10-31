@@ -1,0 +1,298 @@
+{
+  "_note": "AOIs (areas of interest) per post. Boxes are [x0, y0, x1, y1] in pixels of the ORIGINAL image. An AOI can have several boxes (e.g. three faces). AOI types used in the summary: logo, headline, face, offer, cta, body, visual. Edit the boxes here, then re-run the script. For a redesign, add a new entry with its own image and boxes.",
+  "post1_brand_flag": {
+    "image": "post1_brand_flag_original.png",
+    "label": "Brand flag (no offer)",
+    "aois": {
+      "logo": {
+        "type": "logo",
+        "boxes": [
+          [
+            380,
+            470,
+            770,
+            755
+          ]
+        ]
+      },
+      "tagline": {
+        "type": "headline",
+        "boxes": [
+          [
+            405,
+            755,
+            670,
+            830
+          ]
+        ]
+      },
+      "people": {
+        "type": "face",
+        "boxes": [
+          [
+            60,
+            200,
+            315,
+            560
+          ]
+        ]
+      }
+    }
+  },
+  "post2_taekwondo_kids": {
+    "image": "post2_taekwondo_kids_original.png",
+    "label": "Taekwondo Kids free trial",
+    "aois": {
+      "headline": {
+        "type": "headline",
+        "boxes": [
+          [
+            55,
+            90,
+            570,
+            520
+          ]
+        ]
+      },
+      "face": {
+        "type": "face",
+        "boxes": [
+          [
+            575,
+            180,
+            760,
+            430
+          ]
+        ]
+      },
+      "benefits": {
+        "type": "body",
+        "boxes": [
+          [
+            75,
+            540,
+            380,
+            875
+          ]
+        ]
+      },
+      "offer": {
+        "type": "offer",
+        "boxes": [
+          [
+            75,
+            920,
+            410,
+            1045
+          ]
+        ]
+      },
+      "cta": {
+        "type": "cta",
+        "boxes": [
+          [
+            75,
+            1065,
+            405,
+            1165
+          ]
+        ]
+      }
+    }
+  },
+  "post3_trainer_rental": {
+    "image": "post3_trainer_rental_original.png",
+    "label": "Trainer space rental",
+    "aois": {
+      "logo": {
+        "type": "logo",
+        "boxes": [
+          [
+            400,
+            35,
+            492,
+            100
+          ]
+        ]
+      },
+      "headline": {
+        "type": "headline",
+        "boxes": [
+          [
+            60,
+            135,
+            500,
+            660
+          ]
+        ]
+      },
+      "offer": {
+        "type": "offer",
+        "boxes": [
+          [
+            55,
+            735,
+            385,
+            940
+          ]
+        ]
+      },
+      "cta": {
+        "type": "cta",
+        "boxes": [
+          [
+            55,
+            1020,
+            315,
+            1085
+          ]
+        ]
+      },
+      "equipment": {
+        "type": "visual",
+        "boxes": [
+          [
+            425,
+            660,
+            900,
+            1080
+          ]
+        ]
+      }
+    }
+  },
+  "post4_boxing_open_ring": {
+    "image": "post4_boxing_open_ring_original.png",
+    "label": "Boxing open ring",
+    "aois": {
+      "logo": {
+        "type": "logo",
+        "boxes": [
+          [
+            385,
+            45,
+            505,
+            135
+          ]
+        ]
+      },
+      "headline": {
+        "type": "headline",
+        "boxes": [
+          [
+            95,
+            180,
+            815,
+            400
+          ]
+        ]
+      },
+      "body": {
+        "type": "body",
+        "boxes": [
+          [
+            170,
+            410,
+            735,
+            525
+          ]
+        ]
+      },
+      "faces": {
+        "type": "face",
+        "boxes": [
+          [
+            205,
+            540,
+            320,
+            665
+          ],
+          [
+            420,
+            565,
+            505,
+            660
+          ],
+          [
+            590,
+            540,
+            705,
+            660
+          ]
+        ]
+      },
+      "cta": {
+        "type": "cta",
+        "boxes": [
+          [
+            235,
+            1120,
+            665,
+            1165
+          ]
+        ]
+      }
+    }
+  },
+  "post5_special_offer": {
+    "image": "post5_special_offer_original.png",
+    "label": "Membership special offer",
+    "aois": {
+      "logo": {
+        "type": "logo",
+        "boxes": [
+          [
+            385,
+            300,
+            525,
+            405
+          ]
+        ]
+      },
+      "headline": {
+        "type": "headline",
+        "boxes": [
+          [
+            115,
+            445,
+            785,
+            665
+          ]
+        ]
+      },
+      "dumbbell": {
+        "type": "visual",
+        "boxes": [
+          [
+            0,
+            665,
+            900,
+            945
+          ]
+        ]
+      },
+      "offer": {
+        "type": "offer",
+        "boxes": [
+          [
+            115,
+            945,
+            780,
+            1090
+          ]
+        ]
+      },
+      "cta": {
+        "type": "cta",
+        "boxes": [
+          [
+            135,
+            1120,
+            760,
+            1245
+          ]
+        ]
+      }
+    }
+  }
+}
