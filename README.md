@@ -15,7 +15,7 @@ number and heatmap in the report can be traced and reproduced.
 | Path | What it is |
 |---|---|
 | `images/` | The five original posts analysed (`*_original.png`, native resolution) |
-| `aois.json` | Areas of interest (AOIs) drawn on each post – final version used for the results |
+| `aois.json` | Areas of interest (AOIs) on each post, proposed by an AI assistant and checked (see `docs/AI_USE_AND_PROMPTS.md`) – final version used for the results |
 | `src/buka_attention/` | Pipeline package: `cli` (entry point), `model` (DeepGaze IIE), `stats` (AOI statistics), `visuals` (heatmaps), `report` (tables), `schemas` (AOI file and output rows) |
 | `tests/` | Unit tests, plus `test_smoke.py`: installation check on a synthetic image |
 | `results/stats.md` | Summary and per-AOI tables (same data as the CSVs) |
@@ -23,6 +23,7 @@ number and heatmap in the report can be traced and reproduced.
 | `results/heatmaps/` | `<post>_heatmap.png` and `<post>_aoi.png` (heatmap + AOI boxes + % attention) |
 | `docs/METHOD.md` | Step-by-step method, metric definitions, limitations |
 | `docs/DECISIONS.md` | Decision log: what we chose, why, and the alternatives |
+| `docs/AI_USE_AND_PROMPTS.md` | Where generative AI was used, and the prompts (incl. the AOI annotation prompt) |
 | `docs/aois_v0_before_overlap_fix.json` | First AOI version, kept for the audit trail |
 | `patches/` | One-line compatibility patch applied to the DeepGaze package |
 | `requirements.txt`, `setup.sh` | Exact environment used |

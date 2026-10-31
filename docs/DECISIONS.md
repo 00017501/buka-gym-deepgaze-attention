@@ -130,3 +130,33 @@ reason, and the alternatives considered.
   load. The methodology is unchanged.
 - **Effect:** None on the numbers. A full rerun gives densities, CSVs, `stats.md`
   and heatmaps byte-identical to `results/` and to the previous script.
+
+### D14 – Correction: AOIs were AI-proposed, not hand-drawn
+- **Decision:** Record how the AOI boxes were actually made. D7 originally called
+  them "hand-drawn rectangles". In fact an AI assistant proposed the coordinates by
+  visual inspection of each post. The boxes were fixed before the model was run,
+  checked against the overlays by the researcher, and corrected once (D8).
+- **Why:** The module requires any AI-generated material, and the prompts behind it,
+  to be disclosed. The instruction, a reusable annotation prompt and the
+  replication notes are in [AI_USE_AND_PROMPTS.md](AI_USE_AND_PROMPTS.md).
+  METHOD.md §3 is updated to match. D7 itself is left unedited, following the
+  rule that log entries are never rewritten.
+- **Effect:** None on the numbers. `aois.json` is unchanged.
+
+### D15 – Restructure (D13) independently verified
+- **Decision:** Before publishing D13, the restructured code was checked against
+  the original script.
+- **Evidence (31 Oct 2026):**
+  - The code review found no change to the metric definitions (share, area, lift,
+    first-look rank by peak, 10 px-grid entropy and clarity, top-10% share,
+    per-type shares with n/a when absent, rest of image), the overlay settings (D11),
+    the centre-bias handling, or the CLI flags (`--skip-model`, `--only`, `--compare`).
+  - `ruff check` and `ruff format --check` were clean. `pytest`: 25 passed,
+    including the DeepGaze smoke test.
+  - A full model re-run on the five posts into a fresh folder gave
+    `stats.md`, `stats_aoi.csv`, `stats_summary.csv` and all 10 heatmaps
+    byte-identical to `results/`. All 5 density maps were byte-identical to the
+    original script's run.
+  - A `--skip-model` re-run was also identical, and `--only` with `--compare`
+    produced `compare.csv` as expected.
+- **Effect:** None on the numbers.

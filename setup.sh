@@ -22,4 +22,4 @@ if [ ! -f centerbias_mit1003.npy ]; then
     https://github.com/matthias-k/DeepGaze/releases/download/v1.0.0/centerbias_mit1003.npy
 fi
 
-echo "Setup done. Next: .venv/bin/python src/smoke_test.py"
+echo "Setup done. Next: .venv/bin/pip install -r requirements-dev.txt && .venv/bin/pytest -m slow"

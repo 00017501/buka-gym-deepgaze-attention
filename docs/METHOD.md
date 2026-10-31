@@ -38,8 +38,11 @@ a mute icon on post 5) were left in place (see Limitations).
 
 ## 3. Areas of interest (AOIs)
 
-AOIs were drawn by hand as rectangles in original-image pixel coordinates
-(`[x0, y0, x1, y1]`) and stored in `aois.json`. Each AOI has a type:
+AOIs were defined as rectangles in original-image pixel coordinates by visual
+inspection. The coordinates were proposed by an AI assistant (see
+[AI_USE_AND_PROMPTS.md](AI_USE_AND_PROMPTS.md)), fixed before the model was
+run, checked against the overlays by the researcher, and corrected once (D8).
+They are stored as `[x0, y0, x1, y1]` in `aois.json`. Each AOI has a type:
 `logo`, `headline`, `face`, `offer`, `cta`, `body` or `visual`. One AOI can have
 several boxes (e.g. the three heads in post 4). Pixels outside all AOIs form
 "(rest of image)".
