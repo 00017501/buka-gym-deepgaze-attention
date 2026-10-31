@@ -272,3 +272,9 @@ reason, and the alternatives considered.
   gained both area (3.1% → 5.4%) and pull per pixel (lift 1.57 → 2.35). The
   benefits block, which drew a quarter of the attention, is now a single line.
   These are predicted attention shares, not eye-tracking.
+
+### D20 – Guide renamed
+- **Decision:** `docs/ADD_A_POST.md` (named in D16) was renamed to
+  `docs/ANALYSIS_GUIDE.md`, because it now covers redesigns as well as new posts.
+  The content is unchanged; the details are in `AOI_GENERATION.md` and
+  `REDESIGN.md`.

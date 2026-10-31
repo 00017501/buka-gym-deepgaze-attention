@@ -1,8 +1,10 @@
-# Analysing a new post (or a redesign)
+# Analysis guide: new posts and redesigns
 
-A step-by-step guide to adding another image and getting the same attention
-statistics as the five original posts. Run every command from the repository root,
-after `./setup.sh` (see the README).
+How to analyse any image, a new post or an AI redesign, and get the same attention
+statistics as the five original posts. For details, see
+[AOI_GENERATION.md](AOI_GENERATION.md) (AOI boxes) and [REDESIGN.md](REDESIGN.md)
+(making a redesign). Run every command from the repository root after
+`./setup.sh` (see the README).
 
 > **Rules**
 > - Fix the AOI boxes **before** you look at the heatmap. Afterwards, correct them

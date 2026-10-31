@@ -1,7 +1,7 @@
 # AOI generation
 
 How AOI boxes are proposed by AI, checked, reviewed and added to `aois.json`.
-Quick path: [ADD_A_POST.md step 3](ADD_A_POST.md#3-generate-the-aois-with-the-ai-prompt).
+Quick path: [ANALYSIS_GUIDE.md step 3](ANALYSIS_GUIDE.md#3-generate-the-aois-with-the-ai-prompt).
 Decisions: D7, D8, D14, D17, D19.
 
 > **Rules**
@@ -94,7 +94,7 @@ It refuses keys already in the file and entries that fail the checks.
 Give the prompt from §1, with the size filled in, and one image to any multimodal
 assistant. Log the tool, model, date, prompt and raw reply in
 [AI_USE_AND_PROMPTS.md](AI_USE_AND_PROMPTS.md). Paste the reply into `aois.json`
-under the new key (format: [ADD_A_POST.md step 4](ADD_A_POST.md#4-add-the-entry-to-aoisjson)),
+under the new key (format: [ANALYSIS_GUIDE.md step 4](ANALYSIS_GUIDE.md#4-add-the-entry-to-aoisjson)),
 then validate it.
 
 ## 7. Robustness
@@ -103,4 +103,4 @@ AI annotation isn't deterministic, so the published `aois.json`, not the prompt,
 reproduces the numbers. A blind re-annotation of post 2 came within 0.5 points on
 the face, benefits, offer and CTA shares. The headline differed, 20.0% against
 29.9%, because the reply split off the "for children from 5" line.
-See [ADD_A_POST.md worked example, step 3](ADD_A_POST.md#step-3--aoi-prompt-and-reply).
+See [ANALYSIS_GUIDE.md worked example, step 3](ANALYSIS_GUIDE.md#step-3--aoi-prompt-and-reply).

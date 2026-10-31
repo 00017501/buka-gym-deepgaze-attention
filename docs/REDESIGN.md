@@ -91,7 +91,7 @@ example: [AOI_GENERATION.md](AOI_GENERATION.md).
 
 → `output/heatmaps/<key>_heatmap.png` and `_aoi.png`, plus `output/stats.md`
 (every post, with a before/after section at the end) and `output/compare.csv`.
-Check that each post's shares sum to 100% (see [ADD_A_POST.md step 5](ADD_A_POST.md#5-run-the-model-and-check-the-boxes)).
+Check that each post's shares sum to 100% (see [ANALYSIS_GUIDE.md step 5](ANALYSIS_GUIDE.md#5-run-the-model-and-check-the-boxes)).
 
 ![Original vs variant B: predicted attention with AOI shares](img/redesign/a_vs_b.jpg)
 
@@ -103,4 +103,4 @@ that the existing rows are unchanged. Then:
 - add the run to [AI_USE_AND_PROMPTS.md §4](AI_USE_AND_PROMPTS.md#4-ai-generated-redesigns-step-2);
 - add the stimulus to [METHOD.md §1](METHOD.md#1-stimuli);
 - add a `Dn` entry with the result;
-- commit (checklist: [ADD_A_POST.md step 9](ADD_A_POST.md#9-commit-and-push-checklist)).
+- commit (checklist: [ANALYSIS_GUIDE.md step 9](ANALYSIS_GUIDE.md#9-commit-and-push-checklist)).
