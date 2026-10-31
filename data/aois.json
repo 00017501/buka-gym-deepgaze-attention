@@ -1,7 +1,7 @@
 {
   "_note": "AOIs (areas of interest) per post. Boxes are [x0, y0, x1, y1] in pixels of the ORIGINAL image. An AOI can have several boxes (e.g. three faces). AOI types used in the summary: logo, headline, face, offer, cta, body, visual. Edit the boxes here, then re-run the script. For a redesign, add a new entry with its own image and boxes.",
   "post1_brand_flag": {
-    "image": "post1_brand_flag_original.png",
+    "image": "posts/post1_brand_flag_original.png",
     "label": "Brand flag (no offer)",
     "aois": {
       "logo": {
@@ -40,7 +40,7 @@
     }
   },
   "post2_taekwondo_kids": {
-    "image": "post2_taekwondo_kids_original.png",
+    "image": "posts/post2_taekwondo_kids_original.png",
     "label": "Taekwondo Kids free trial",
     "aois": {
       "headline": {
@@ -101,7 +101,7 @@
     }
   },
   "post3_trainer_rental": {
-    "image": "post3_trainer_rental_original.png",
+    "image": "posts/post3_trainer_rental_original.png",
     "label": "Trainer space rental",
     "aois": {
       "logo": {
@@ -162,7 +162,7 @@
     }
   },
   "post4_boxing_open_ring": {
-    "image": "post4_boxing_open_ring_original.png",
+    "image": "posts/post4_boxing_open_ring_original.png",
     "label": "Boxing open ring",
     "aois": {
       "logo": {
@@ -235,7 +235,7 @@
     }
   },
   "post5_special_offer": {
-    "image": "post5_special_offer_original.png",
+    "image": "posts/post5_special_offer_original.png",
     "label": "Membership special offer",
     "aois": {
       "logo": {
@@ -296,7 +296,7 @@
     }
   },
   "post2_v1": {
-    "image": "post2_v1.png",
+    "image": "redesigns/post2_v1.png",
     "label": "Taekwondo Kids – variant B",
     "aois": {
       "logo": {

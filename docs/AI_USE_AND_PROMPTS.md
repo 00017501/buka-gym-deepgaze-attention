@@ -10,7 +10,7 @@ Claude (Anthropic), used through Claude Code.
 
 | Step | What the AI did | Human check |
 |---|---|---|
-| AOI definition | Proposed the AOI rectangles (pixel coordinates and types) for the 5 posts by looking at each image, and wrote `aois.json` | The boxes were checked on the overlay images. Two overlapping boxes were corrected after the first run on the researcher's instruction ([DECISIONS.md](DECISIONS.md) D8) |
+| AOI definition | Proposed the AOI rectangles (pixel coordinates and types) for the 5 posts by looking at each image, and wrote `data/aois.json` | The boxes were checked on the overlay images. Two overlapping boxes were corrected after the first run on the researcher's instruction ([DECISIONS.md](DECISIONS.md) D8) |
 | Analysis code | Wrote the original single-file pipeline (statistics, heatmaps, overlays) and the smoke test | Tested on synthetic data before use. The metric definitions are documented in METHOD.md |
 | Code restructure review | Reviewed the researcher's restructure into `src/buka_attention/` (D13): checked that every metric, the overlay settings, the centre-bias handling and the CLI flags are unchanged, ran ruff and the tests, and re-ran the full model to confirm byte-identical outputs (D15) | The restructure itself was directed by the researcher, with Claude Code assistance (see the commit co-author lines) |
 | Environment setup | Installed DeepGaze IIE on the researcher's laptop, made the compatibility patch, ran the model | The smoke test checked the output (shape, sum to 1, off-centre peak) |
@@ -34,7 +34,7 @@ text blocks and product images, so that these would not be hidden inside
 ### 1b. Reusable prompt (to replicate the annotation)
 
 Give a multimodal AI model **one post image** and this prompt. Then paste its
-output into `aois.json` under a new key.
+output into `data/aois.json` under a new key.
 
 ```
 You are annotating areas of interest (AOIs) on a social-media marketing image for an
@@ -65,8 +65,8 @@ Rules:
 
 **Replication note.** AI annotation is not deterministic: a different model, or
 the same model on another day, will give slightly different coordinates. That is
-why the **exact boxes used are published** in `aois.json`, with the pre-fix
-version in `docs/aois_v0_before_overlap_fix.json`. Those files, not the prompt,
+why the **exact boxes used are published** in `data/aois.json`, with the pre-fix
+version in `provenance/aois/aois_v0_before_overlap_fix.json`. Those files, not the prompt,
 are what reproduce the numbers. Anyone can redraw the boxes with another tool (or
 by hand) and re-run the statistics with `--skip-model` to test how sensitive the
 results are to AOI placement.
@@ -75,7 +75,7 @@ results are to AOI placement.
 
 The 1b prompt, loaded from `prompts/aoi_annotation.txt`, is sent to Claude
 (Anthropic, `claude-opus-5-5`, effort `high`) by `python -m src.annotate run`. Each
-run keeps an audit record and the raw reply in `aois_generated/`. The five
+run keeps an audit record and the raw reply in `provenance/aois/`. The five
 published posts keep the 1a boxes (D17). Procedure and example:
 [AOI_GENERATION.md](AOI_GENERATION.md).
 
@@ -102,7 +102,7 @@ repository, in order. They are lightly shortened and personal names are removed.
    `deepgaze_pytorch.DeepGazeIIE(pretrained=True)`, run it on any test image, and
    confirm a log-density map is produced."
 2. **Run:** "Read buka_attention.py first. Then run
-   `python buka_attention.py --images images --aois aois.json --out output --centerbias centerbias_mit1003.npy`.
+   `python buka_attention.py --images data --aois data/aois.json --out output --centerbias centerbias_mit1003.npy`.
    Report the full contents of output/stats.md and any errors. Look at each
    output/heatmaps/*_aoi.png and say whether any AOI box clearly misses its
    element. Do not edit aois.json yourself."
@@ -136,11 +136,11 @@ The run (31 Oct 2026) went as follows:
 
 - **Attempt 1:** model `gpt-image-2.5-sunburst-2026-09-08`, quality `high`,
   1024×1536, request `req_8951c45d948d4224835fc41d84962804`. It passed every
-  check (`redesigns/post2_v1_attempt1_check.jpg`) and was used. No further
+  check (`provenance/redesigns/post2_v1_attempt1_check.jpg`) and was used. No further
   attempts were made.
 - **Fit to the post size:** cropped 172 px from the bottom and resized to
-  900×1199 (`redesigns/post2_v1_final.json`, D18).
+  900×1199 (`provenance/redesigns/post2_v1_final.json`, D18).
 - **AOIs:** proposed by Claude with `python -m src.annotate run` (1c). The raw
-  reply is in `aois_generated/post2_v1.ai_original.json`, and the reviewed
+  reply is in `provenance/aois/post2_v1.ai_original.json`, and the reviewed
   corrections are listed in D19.
 - **Result:** `results/post2_A_vs_B.jpg` and `results/compare.csv`.

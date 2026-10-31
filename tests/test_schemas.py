@@ -19,7 +19,7 @@ PUBLISHED_POSTS = {
 }
 
 
-@pytest.mark.parametrize("relative_path", ["aois.json", "docs/aois_v0_before_overlap_fix.json"])
+@pytest.mark.parametrize("relative_path", ["data/aois.json", "provenance/aois/aois_v0_before_overlap_fix.json"])
 def test_repository_aoi_files_load(relative_path: str) -> None:
     specs = load_specs(REPO_ROOT / relative_path)
     assert specs.keys() >= PUBLISHED_POSTS

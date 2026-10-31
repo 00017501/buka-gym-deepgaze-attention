@@ -12,28 +12,22 @@ heatmap in the report can be traced and reproduced.
 
 ## Repository layout
 
-| Path | What it is |
-|---|---|
-| `images/` | The five original posts analysed (`*_original.png`, native resolution) |
-| `aois.json` | Areas of interest (AOIs) on each post, proposed by an AI assistant and checked (see `docs/AI_USE_AND_PROMPTS.md`) – final version used for the results |
-| `src/buka_attention/` | Pipeline package: `cli` (entry point), `model` (DeepGaze IIE), `stats` (AOI statistics), `visuals` (heatmaps), `report` (tables), `schemas` (AOI file and output rows) |
-| `src/annotate/` | AOI annotation with Claude (`run`, into `aois_generated/`) and `apply` into `aois.json` |
-| `src/redesign/` | AI redesigns with OpenAI image edits (`generate`, into `redesigns/`) and `finalize` to the post size |
-| `prompts/` | The exact prompts the two scripts send |
-| `tests/` | Unit tests, plus `test_smoke.py`: installation check on a synthetic image |
-| `results/stats.md` | Summary and per-AOI tables (same data as the CSVs) |
-| `results/stats_summary.csv`, `results/stats_aoi.csv` | Machine-readable results |
-| `results/heatmaps/` | `<post>_heatmap.png` and `<post>_aoi.png` (heatmap + AOI boxes + % attention) |
-| `docs/METHOD.md` | Step-by-step method, metric definitions, limitations |
-| `docs/ANALYSIS_GUIDE.md` | Step-by-step guide to analysing a new post or a redesign |
-| `docs/REDESIGN.md` | Runbook for AI redesigns: keys, generate, check, finalize, AOIs, compare |
-| `docs/AOI_GENERATION.md` | AOI boxes: AI proposal, checks, review rules, apply, manual alternative |
-| `docs/DECISIONS.md` | Decision log: what we chose, why, and the alternatives |
-| `docs/AI_USE_AND_PROMPTS.md` | Where generative AI was used, and the prompts (incl. the AOI annotation prompt) |
-| `docs/aois_v0_before_overlap_fix.json` | First AOI version, kept for the audit trail |
-| `patches/` | One-line compatibility patch applied to the DeepGaze package |
-| `requirements.txt`, `setup.sh` | Exact environment used |
-| `requirements-dev.txt`, `ruff.toml`, `pytest.ini` | Lint and test tooling (not needed to reproduce) |
+| Group | Path | What it is |
+|---|---|---|
+| **Research inputs** | `data/posts/` | The five original posts (`*_original.png`, native resolution) |
+| | `data/redesigns/` | Finalised AI redesigns that are analysed (`post2_v1.png`, D18) |
+| | `data/aois.json` | Final AOI boxes for every image; image paths are relative to `data/` |
+| | `prompts/` | The exact prompts sent to the AI (redesign, AOI annotation) |
+| **Research outputs** | `results/` | Everything cited by the report: `stats.md`, `stats_*.csv`, `compare.csv`, `heatmaps/`, `post2_A_vs_B.jpg` |
+| **Audit trail** | `provenance/redesigns/` | Every redesign attempt with its record, the check images, and fit records (including superseded ones) |
+| | `provenance/aois/` | AI AOI proposals (raw and reviewed), their records, and the first AOI version (`aois_v0_before_overlap_fix.json`) |
+| **Docs** | `docs/` | [METHOD](docs/METHOD.md), [DECISIONS](docs/DECISIONS.md), [ANALYSIS_GUIDE](docs/ANALYSIS_GUIDE.md), [AOI_GENERATION](docs/AOI_GENERATION.md), [REDESIGN](docs/REDESIGN.md), [AI_USE_AND_PROMPTS](docs/AI_USE_AND_PROMPTS.md) |
+| | `docs/img/` | Images made only for the docs (research images are linked from where they live) |
+| **Code** | `src/buka_attention/` | DeepGaze pipeline: `cli`, `model`, `stats`, `visuals`, `report`, `schemas` |
+| | `src/annotate/`, `src/redesign/` | AI AOI proposals (`run`/`apply`); AI redesigns (`generate`/`finalize`) |
+| | `tests/` | Unit tests; `test_smoke.py` checks the installation on a synthetic image |
+| **Environment** | `requirements.txt`, `setup.sh`, `patches/` | Exact environment and the DeepGaze patch |
+| | `requirements-dev.txt`, `ruff.toml`, `pytest.ini` | Lint, test and AI-script tooling (not needed to reproduce) |
 
 ## Results at a glance
 
@@ -62,7 +56,7 @@ Tested on macOS (Apple M4 Pro, CPU inference), Python 3.13.
 ./setup.sh                                   # venv, pinned packages, DeepGaze at a fixed commit, centre-bias file
 .venv/bin/pip install -r requirements-dev.txt
 .venv/bin/pytest -m slow                     # installation check on a synthetic image
-.venv/bin/python -m src.buka_attention --images images --aois aois.json \
+.venv/bin/python -m src.buka_attention --images data --aois data/aois.json \
     --out output --centerbias centerbias_mit1003.npy
 ```
 
@@ -104,7 +98,7 @@ Code conventions: [`.claude/rules/python.md`](.claude/rules/python.md).
 ## Licence
 
 Code and documentation: MIT (see [`LICENSE`](LICENSE)).
-**The post images in `images/` and the heatmaps derived from them in
+**The post images in `data/posts/` and the heatmaps derived from them in
 `results/heatmaps/` belong to Buka Gym. The MIT licence does not cover them.**
 They are included only so the analysis can be checked and reproduced.
 

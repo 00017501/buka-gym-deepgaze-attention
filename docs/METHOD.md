@@ -7,7 +7,7 @@ The reasons behind each choice are in [DECISIONS.md](DECISIONS.md).
 ## 1. Stimuli
 
 Five Buka Gym Instagram posts, saved as PNG at their native export resolution
-(900 px wide) in `images/`:
+(900 px wide) in `data/posts/`:
 
 | Key | Post | Size (w × h) |
 |---|---|---|
@@ -43,7 +43,7 @@ AOIs were defined as rectangles in original-image pixel coordinates by visual
 inspection. The coordinates were proposed by an AI assistant (see
 [AI_USE_AND_PROMPTS.md](AI_USE_AND_PROMPTS.md)), fixed before the model was
 run, checked against the overlays by the researcher, and corrected once (D8).
-They are stored as `[x0, y0, x1, y1]` in `aois.json`. Each AOI has a type:
+They are stored as `[x0, y0, x1, y1]` in `data/aois.json`. Each AOI has a type:
 `logo`, `headline`, `face`, `offer`, `cta`, `body` or `visual`. One AOI can have
 several boxes (e.g. the three heads in post 4). Pixels outside all AOIs form
 "(rest of image)".
@@ -98,7 +98,7 @@ and `python -m src.buka_attention`, which give byte-identical outputs (DECISIONS
 - **First-look order is a proxy.** The order is ranked by peak density, not by a
   sequential scanpath model (e.g. DeepGaze III).
 - **AOIs are subjective.** Box placement affects shares. To mitigate this,
-  `aois.json` and the earlier version are published so readers can redraw boxes and
+  `data/aois.json` and the earlier version are published so readers can redraw boxes and
   re-run with `--skip-model`.
 - **Text is not "read".** The model responds to text as a visual feature
   (contrast, size, position), not to its meaning or language (Russian/Cyrillic).

@@ -22,6 +22,8 @@ logger = logging.getLogger(__name__)
 MAX_EDGE_PX = 1568
 # Room for the boxes JSON with adaptive thinking on; well under the non-streaming timeout.
 MAX_TOKENS = 16000
+# Image paths in aois.json are relative to this folder.
+DATA_DIR = Path("data")
 
 
 @dataclass(frozen=True)
@@ -76,6 +78,14 @@ def prepare_image(path: Path) -> tuple[bytes, tuple[int, int], tuple[int, int], 
     return buffer.getvalue(), image.size, sent.size, scale
 
 
+def image_ref(path: Path) -> str:
+    """Return the image path as aois.json stores it: relative to `DATA_DIR`, or just the file name outside it."""
+    try:
+        return path.resolve().relative_to(DATA_DIR.resolve()).as_posix()
+    except ValueError:
+        return path.name
+
+
 def annotate(model: Model | str, request: AnnotationRequest, out_dir: Path) -> AnnotationRecord:
     """Annotate one image into `<out_dir>/<key>.json` (the aois.json entry) and `<key>.meta.json`.
 
@@ -107,7 +117,10 @@ def annotate(model: Model | str, request: AnnotationRequest, out_dir: Path) -> A
     for problem in problems:
         logger.warning("aoi_problem key=%s problem=%s", request.key, problem)
     out_dir.mkdir(parents=True, exist_ok=True)
-    entry = {"image": request.image.name, "aois": {name: aoi.model_dump(mode="json") for name, aoi in aois.items()}}
+    entry = {
+        "image": image_ref(request.image),
+        "aois": {name: aoi.model_dump(mode="json") for name, aoi in aois.items()},
+    }
     entry_path.write_text(json.dumps(entry, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     record = _record(request, model, result, prompt, SentImage(original_size, sent_size, scale))
     record.problems = problems

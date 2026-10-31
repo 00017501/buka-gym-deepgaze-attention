@@ -29,14 +29,14 @@ The whole flow at a glance, using post 2 as the example (full walk-through in
 - Crop away the Instagram interface (header, buttons, caption) so only the post
   itself remains. If a small overlay can't be removed, leave it and note it (see
   D10).
-- Save it as PNG in `images/`:
-  - new post: `images/<postN>_<short_name>_original.png`, e.g. `post6_class_schedule_original.png`
-  - redesign: `images/<postN>_v<k>.png`, e.g. `post2_v1.png`
+- Save it as PNG in `data/posts/`:
+  - new post: `data/posts/<postN>_<short_name>_original.png`, e.g. `post6_class_schedule_original.png`
+  - redesign: `data/redesigns/<postN>_v<k>.png`, e.g. `post2_v1.png` (made by [REDESIGN.md](REDESIGN.md))
 
 ## 2. Get the image size
 
 ```bash
-.venv/bin/python -c "from PIL import Image; print(Image.open('images/post6_class_schedule_original.png').size)"
+.venv/bin/python -c "from PIL import Image; print(Image.open('data/posts/post6_class_schedule_original.png').size)"
 ```
 
 This prints `(width, height)`. For post 2 it prints `(900, 1199)`
@@ -51,21 +51,21 @@ step 4. Details, options, review rules and examples:
 [AOI_GENERATION.md](AOI_GENERATION.md).
 
 ```bash
-.venv/bin/python -m src.annotate run images/post6_class_schedule_original.png      # needs ANTHROPIC_API_KEY
-.venv/bin/python -m src.annotate apply aois_generated/post6_class_schedule.json --label "Class schedule"
+.venv/bin/python -m src.annotate run data/posts/post6_class_schedule_original.png      # needs ANTHROPIC_API_KEY
+.venv/bin/python -m src.annotate apply provenance/aois/post6_class_schedule.json --label "Class schedule"
 ```
 
 Without the API, give the prompt to any multimodal assistant by hand
 ([AOI_GENERATION.md §6](AOI_GENERATION.md#6-manual-alternative)), then go on to step 4.
 
-## 4. Add the entry to `aois.json`
+## 4. Add the entry to `data/aois.json`
 
 Add a new top-level key: the post name without `_original`. Its value holds the
-image file name, a short display label, and the `aois` object from the reply:
+image path relative to `data/`, a short display label, and the `aois` object from the reply:
 
 ```json
 "post6_class_schedule": {
-  "image": "post6_class_schedule_original.png",
+  "image": "posts/post6_class_schedule_original.png",
   "label": "Class schedule",
   "aois": {
     "headline": {"type": "headline", "boxes": [[60, 120, 840, 380]]},
@@ -81,7 +81,7 @@ image file name, a short display label, and the `aois` object from the reply:
 Validate the file:
 
 ```bash
-.venv/bin/python -c "from pathlib import Path; from src.buka_attention.schemas import load_specs; print(list(load_specs(Path('aois.json'))))"
+.venv/bin/python -c "from pathlib import Path; from src.buka_attention.schemas import load_specs; print(list(load_specs(Path('data/aois.json'))))"
 ```
 
 It prints all post keys. A typo, such as an unknown type, a missing field or a
@@ -110,7 +110,7 @@ adding to more than 100%:
 .venv/bin/python -c "import csv; print(round(sum(float(r['share_pct']) for r in csv.DictReader(open('output/stats_aoi.csv')) if r['post']=='post6_class_schedule'), 2))"
 ```
 
-The result must be `100.0`. If a box is wrong, fix it in `aois.json` and
+The result must be `100.0`. If a box is wrong, fix it in `data/aois.json` and
 recompute without re-running the model:
 
 ```bash
@@ -123,11 +123,11 @@ Good vs bad, for post 2 ([example](#step-5--run-then-check-the-boxes)):
 
 | Good: boxes cover their elements, shares sum to 100% | Bad: headline overlaps the face, shares sum to 104.94% |
 |---|---|
-| <img src="img/guide/04_aoi.jpg" width="260" alt="Good boxes"> | <img src="img/guide/05_bad_overlap.jpg" width="260" alt="Overlapping boxes"> |
+| <img src="../results/heatmaps/post2_taekwondo_kids_aoi.png" width="260" alt="Good boxes"> | <img src="img/guide/05_bad_overlap.jpg" width="260" alt="Overlapping boxes"> |
 
 ## 6. Redesigns
 
-<img src="img/redesign/a_vs_b.jpg" width="260" align="right" alt="Original vs variant B">
+<img src="../results/post2_A_vs_B.jpg" width="260" align="right" alt="Original vs variant B">
 
 The whole flow (generate an AI redesign, check it, fit it, AOIs, compare) is in
 [REDESIGN.md](REDESIGN.md). The comparison itself:
@@ -146,7 +146,7 @@ To refresh `results/`, `output/` must hold every post. The simplest way is a
 full run:
 
 ```bash
-.venv/bin/python -m src.buka_attention --images images --aois aois.json \
+.venv/bin/python -m src.buka_attention --images data --aois data/aois.json \
     --out output --centerbias centerbias_mit1003.npy
 ```
 
@@ -170,7 +170,7 @@ Check that the original posts' rows in `output/` are unchanged against
 .venv/bin/pytest
 grep -rniE "<your name>|/Users/|/home/" $(git ls-files) || echo "no names or local paths"
 git config user.name && git config user.email   # must be the student ID and its GitHub noreply address
-git add images/ aois.json results/ docs/ && git commit -m "Add <post key>: AOIs and results"
+git add data/ provenance/ results/ docs/ && git commit -m "Add <post key>: AOIs and results"
 git push origin main
 ```
 
@@ -186,14 +186,14 @@ reduced to 450 px wide for this page.
 
 ### Step 1 – the input image
 
-`images/post2_taekwondo_kids_original.png`
+`data/posts/post2_taekwondo_kids_original.png`
 
-<img src="img/guide/01_input.jpg" width="300" alt="Post 2, input image">
+<img src="../data/posts/post2_taekwondo_kids_original.png" width="300" alt="Post 2, input image">
 
 ### Step 2 – image size
 
 ```console
-$ .venv/bin/python -c "from PIL import Image; print(Image.open('images/post2_taekwondo_kids_original.png').size)"
+$ .venv/bin/python -c "from PIL import Image; print(Image.open('data/posts/post2_taekwondo_kids_original.png').size)"
 (900, 1199)
 ```
 
@@ -208,7 +208,7 @@ attention study. The image is 900 x 1199 pixels.
 ```
 
 **Example reply (Claude, 31 Oct 2026).** This is a fresh run by an assistant that
-had not seen `aois.json`, given only the image and the prompt above. The reply is
+had not seen `data/aois.json`, given only the image and the prompt above. The reply is
 shown verbatim:
 
 ```json
@@ -222,14 +222,14 @@ Left: that reply's boxes. Right: the boxes actually used in the study.
 The two sets differ slightly. The fresh reply split the "for children from 5" line
 into its own `audience` AOI and stepped the headline around the face, so its
 headline share is 20.0% against 29.9%. The face, benefits, offer and CTA shares stay
-within 0.5 points. Differences like this are why the published `aois.json`, not
+within 0.5 points. Differences like this are why the published `data/aois.json`, not
 the prompt, is what reproduces the numbers.
 
-### Step 4 – the `aois.json` entry and validation
+### Step 4 – the `data/aois.json` entry and validation
 
 ```json
 "post2_taekwondo_kids": {
-  "image": "post2_taekwondo_kids_original.png",
+  "image": "posts/post2_taekwondo_kids_original.png",
   "label": "Taekwondo Kids free trial",
   "aois": {
     "headline": {"type": "headline", "boxes": [[55, 90, 570, 520]]},
@@ -242,8 +242,8 @@ the prompt, is what reproduces the numbers.
 ```
 
 ```console
-$ .venv/bin/python -c "from pathlib import Path; from src.buka_attention.schemas import load_specs; print(list(load_specs(Path('aois.json'))))"
-['post1_brand_flag', 'post2_taekwondo_kids', 'post3_trainer_rental', 'post4_boxing_open_ring', 'post5_special_offer']
+$ .venv/bin/python -c "from pathlib import Path; from src.buka_attention.schemas import load_specs; print(list(load_specs(Path('data/aois.json'))))"
+['post1_brand_flag', 'post2_taekwondo_kids', 'post3_trainer_rental', 'post4_boxing_open_ring', 'post5_special_offer', 'post2_v1']
 ```
 
 ### Step 5 – run, then check the boxes
@@ -260,10 +260,10 @@ $ .venv/bin/python -c "import csv; print(round(sum(float(r['share_pct']) for r i
 
 | `output/heatmaps/post2_taekwondo_kids_heatmap.png` | `output/heatmaps/post2_taekwondo_kids_aoi.png` |
 |---|---|
-| <img src="img/guide/03_heatmap.jpg" width="300" alt="Heatmap"> | <img src="img/guide/04_aoi.jpg" width="300" alt="AOI overlay"> |
+| <img src="../results/heatmaps/post2_taekwondo_kids_heatmap.png" width="300" alt="Heatmap"> | <img src="../results/heatmaps/post2_taekwondo_kids_aoi.png" width="300" alt="AOI overlay"> |
 
 **What a bad box looks like.** This is the first version of the boxes
-(`docs/aois_v0_before_overlap_fix.json`). The headline box ran into the face box,
+(`provenance/aois/aois_v0_before_overlap_fix.json`). The headline box ran into the face box,
 so the coach's face was counted twice. The shares summed to **104.94%**, and the
 headline took credit for the face hotspot (36.1% instead of 29.9%). The fix moved
 the headline's right edge from 645 to 570 (D8).

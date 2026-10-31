@@ -31,10 +31,10 @@ Purpose: get an AI edit of the original from a fixed prompt.
 ```
 
 The defaults are for `post2_v1`. For another post, add
-`--name <key> --prompt prompts/<key>.txt --images images/<original>.png redesigns/inputs/buka_logo.png`.
+`--name <key> --prompt prompts/<key>.txt --images data/posts/<original>.png redesigns/inputs/buka_logo.png`.
 Model: `gpt-image-2.5-sunburst-2026-09-08`, change it with `--model`.
 
-→ `redesigns/<key>_attemptN.png` plus a `.json` record (prompt and its hash,
+→ `provenance/redesigns/<key>_attemptN.png` plus a `.json` record (prompt and its hash,
 model, settings, input hashes, request ID). Attempts are numbered; at most 3, and
 none is ever overwritten.
 
@@ -49,26 +49,26 @@ looks or heatmaps.
 - There is no extra text, people or watermark.
 
 Accept the **first** attempt that passes. Otherwise run step 1 again. Save a
-side-by-side check image to `redesigns/` (e.g. `post2_v1_attempt1_check.jpg`).
+side-by-side check image to `provenance/redesigns/` (e.g. `post2_v1_attempt1_check.jpg`).
 
-![Original vs attempt 1, faces and logo compared](img/redesign/attempt1_check.jpg)
+![Original vs attempt 1, faces and logo compared](../provenance/redesigns/post2_v1_attempt1_check.jpg)
 
 ## 3. Fit to the post size
 
 Purpose: match the original's 900 × 1199 frame.
 
 ```bash
-.venv/bin/python -m src.redesign finalize redesigns/post2_v1_attempt1.png
+.venv/bin/python -m src.redesign finalize provenance/redesigns/post2_v1_attempt1.png
 ```
 
-→ `images/<key>.png` and `redesigns/<key>_final.json`. The default `--fit crop`
+→ `data/redesigns/<key>.png` and `provenance/redesigns/<key>_final.json`. The default `--fit crop`
 cuts the bottom only, to 3:4, then resizes. Before running, check that the cut
 strip holds no text or AOI content; if it does, record it as a deviation (D18).
 `--fit pad` keeps everything but shrinks the poster and adds side bands.
 
-| Cut strip (bottom 172 px): it held the belt name "KARASEV", logged in D18 | Final `images/post2_v1.png` |
+| Cut strip (bottom 172 px): it held the belt name "KARASEV", logged in D18 | Final `data/redesigns/post2_v1.png` |
 |---|---|
-| <img src="img/redesign/crop_strip.jpg" width="300" alt="Strip removed by the crop"> | <img src="img/redesign/final.jpg" width="220" alt="Final variant B"> |
+| <img src="../provenance/redesigns/post2_v1_crop_strip_check.png" width="300" alt="Strip removed by the crop"> | <img src="../data/redesigns/post2_v1.png" width="220" alt="Final variant B"> |
 
 ## 4–6. AOIs
 
@@ -78,8 +78,8 @@ names), and `src.annotate apply` adds them. Full procedure and the post2_v1
 example: [AOI_GENERATION.md](AOI_GENERATION.md).
 
 ```bash
-.venv/bin/python -m src.annotate run images/post2_v1.png
-.venv/bin/python -m src.annotate apply aois_generated/post2_v1.json --label "Taekwondo Kids – variant B"
+.venv/bin/python -m src.annotate run data/redesigns/post2_v1.png
+.venv/bin/python -m src.annotate apply provenance/aois/post2_v1.json --label "Taekwondo Kids – variant B"
 ```
 
 ## 7. Run and compare
@@ -93,7 +93,7 @@ example: [AOI_GENERATION.md](AOI_GENERATION.md).
 (every post, with a before/after section at the end) and `output/compare.csv`.
 Check that each post's shares sum to 100% (see [ANALYSIS_GUIDE.md step 5](ANALYSIS_GUIDE.md#5-run-the-model-and-check-the-boxes)).
 
-![Original vs variant B: predicted attention with AOI shares](img/redesign/a_vs_b.jpg)
+![Original vs variant B: predicted attention with AOI shares](../results/post2_A_vs_B.jpg)
 
 ## 8. Publish
 

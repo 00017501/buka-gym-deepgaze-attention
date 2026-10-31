@@ -1,6 +1,6 @@
 # AOI generation
 
-How AOI boxes are proposed by AI, checked, reviewed and added to `aois.json`.
+How AOI boxes are proposed by AI, checked, reviewed and added to `data/aois.json`.
 Quick path: [ANALYSIS_GUIDE.md step 3](ANALYSIS_GUIDE.md#3-generate-the-aois-with-the-ai-prompt).
 Decisions: D7, D8, D14, D17, D19.
 
@@ -21,15 +21,15 @@ the image actually sent.
 With `ANTHROPIC_API_KEY` set ([REDESIGN.md §0](REDESIGN.md#0-api-keys)):
 
 ```bash
-.venv/bin/python -m src.annotate run images/post2_v1.png
+.venv/bin/python -m src.annotate run data/redesigns/post2_v1.png
 ```
 
 | Option | Default | Note |
 |---|---|---|
-| `--key` | image name without `_original` | Post key in `aois.json` |
+| `--key` | image name without `_original` | Post key in `data/aois.json` |
 | `--model` | `claude-opus-5-5` | The model that actually answered is recorded as `model_used` |
 | `--effort` | `high` | `low` … `max` |
-| `--out` | `aois_generated/` | Use a subfolder for robustness re-annotations |
+| `--out` | `provenance/aois/` | Use a subfolder for robustness re-annotations |
 
 - **Scaling:** images with a long edge over 1568 px are downscaled before
   sending; the boxes are scaled back to original pixels and the scale is recorded.
@@ -39,8 +39,8 @@ With `ANTHROPIC_API_KEY` set ([REDESIGN.md §0](REDESIGN.md#0-api-keys)):
 
 **Output:**
 
-- `aois_generated/<key>.json`: the proposed `aois.json` entry.
-- `aois_generated/<key>.meta.json`: the audit record. It holds the model requested
+- `provenance/aois/<key>.json`: the proposed `data/aois.json` entry.
+- `provenance/aois/<key>.meta.json`: the audit record. It holds the model requested
   and used, effort, the prompt and its SHA-256, the image SHA-256, sizes and
   scale, the request ID, token usage, the raw reply, and the problems found.
 
@@ -59,7 +59,7 @@ Each problem is logged as `WARNING aoi_problem ...` and stored in `problems`.
 
 Done before any heatmap exists:
 
-1. Keep the raw reply: `cp aois_generated/<key>.json aois_generated/<key>.ai_original.json`.
+1. Keep the raw reply: `cp provenance/aois/<key>.json provenance/aois/<key>.ai_original.json`.
 2. Draw the boxes on the image and check that each covers its element.
 3. Fix overlaps by the **D8 rule**: the face keeps its full box, and text boxes are
    trimmed or split at the visible boundary.
@@ -83,23 +83,23 @@ age       [48, 514, 420, 572]  → merged into headline                      the
 ## 5. Apply
 
 ```bash
-.venv/bin/python -m src.annotate apply aois_generated/post2_v1.json --label "Taekwondo Kids – variant B"
+.venv/bin/python -m src.annotate apply provenance/aois/post2_v1.json --label "Taekwondo Kids – variant B"
 ```
 
-This appends the entry to `aois.json` without reformatting the rest of the file.
+This appends the entry to `data/aois.json` without reformatting the rest of the file.
 It refuses keys already in the file and entries that fail the checks.
 
 ## 6. Manual alternative
 
 Give the prompt from §1, with the size filled in, and one image to any multimodal
 assistant. Log the tool, model, date, prompt and raw reply in
-[AI_USE_AND_PROMPTS.md](AI_USE_AND_PROMPTS.md). Paste the reply into `aois.json`
-under the new key (format: [ANALYSIS_GUIDE.md step 4](ANALYSIS_GUIDE.md#4-add-the-entry-to-aoisjson)),
+[AI_USE_AND_PROMPTS.md](AI_USE_AND_PROMPTS.md). Paste the reply into `data/aois.json`
+under the new key (format: [ANALYSIS_GUIDE.md step 4](ANALYSIS_GUIDE.md#4-add-the-entry-to-dataaoisjson)),
 then validate it.
 
 ## 7. Robustness
 
-AI annotation isn't deterministic, so the published `aois.json`, not the prompt,
+AI annotation isn't deterministic, so the published `data/aois.json`, not the prompt,
 reproduces the numbers. A blind re-annotation of post 2 came within 0.5 points on
 the face, benefits, offer and CTA shares. The headline differed, 20.0% against
 29.9%, because the reply split off the "for children from 5" line.

@@ -185,3 +185,10 @@ def test_run_explains_a_missing_image(tmp_path: Path) -> None:
     args = build_parser().parse_args(["run", str(tmp_path / "post2_v1.png")])
     with pytest.raises(SystemExit, match=re.escape("run `python -m src.redesign finalize <attempt>` first")):
         _run(args)
+
+
+def test_image_ref_is_relative_to_the_data_folder(tmp_path: Path) -> None:
+    from src.annotate.annotate import image_ref
+
+    assert image_ref(Path("data/redesigns/post2_v1.png")) == "redesigns/post2_v1.png"
+    assert image_ref(tmp_path / "elsewhere.png") == "elsewhere.png"

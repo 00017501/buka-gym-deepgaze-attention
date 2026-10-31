@@ -17,11 +17,11 @@ from src.redesign.records import AttemptRecord, InputFile, sha256_of
 logger = logging.getLogger(__name__)
 
 # Logo source: the cleanest Buka Gym wordmark among the posts (post 4, top centre).
-LOGO_SOURCE = Path("images/post4_boxing_open_ring_original.png")
+LOGO_SOURCE = Path("data/posts/post4_boxing_open_ring_original.png")
 # Logo box in that post, [x0, y0, x1, y1] pixels (same as its AOI in aois.json).
 LOGO_BOX = (385, 45, 505, 135)
 # Where the crop is written; it is the second input image of the edit request.
-LOGO_PATH = Path("redesigns/inputs/buka_logo.png")
+LOGO_PATH = Path("provenance/redesigns/inputs/buka_logo.png")
 
 
 @dataclass(frozen=True)

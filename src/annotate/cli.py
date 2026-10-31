@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 DEFAULT_MODEL = "claude-opus-5-5"
 # Opus 5.5 defaults to `medium`; box placement is careful visual work, so ask for more.
 DEFAULT_EFFORT = "high"
-STAGING_DIR = Path("aois_generated")
+STAGING_DIR = Path("provenance/aois")
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -22,8 +22,10 @@ def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="python -m src.annotate", description=__doc__)
     commands = parser.add_subparsers(dest="command", required=True)
 
-    run = commands.add_parser("run", help="annotate one image into aois_generated/<key>.json (needs ANTHROPIC_API_KEY)")
-    run.add_argument("image", type=Path, help="e.g. images/post2_v1.png")
+    run = commands.add_parser(
+        "run", help="annotate one image into provenance/aois/<key>.json (needs ANTHROPIC_API_KEY)"
+    )
+    run.add_argument("image", type=Path, help="e.g. data/redesigns/post2_v1.png")
     run.add_argument("--key", help="post key (default: image name without _original)")
     run.add_argument("--prompt", type=Path, default=Path("prompts/aoi_annotation.txt"))
     run.add_argument("--model", default=DEFAULT_MODEL)
@@ -31,10 +33,10 @@ def build_parser() -> argparse.ArgumentParser:
     run.add_argument("--out", type=Path, default=STAGING_DIR, help="staging folder (robustness runs: a subfolder)")
 
     apply = commands.add_parser("apply", help="add a reviewed staging entry to aois.json")
-    apply.add_argument("entry", type=Path, help="e.g. aois_generated/post2_v1.json")
+    apply.add_argument("entry", type=Path, help="e.g. provenance/aois/post2_v1.json")
     apply.add_argument("--label", help="display label for the tables")
-    apply.add_argument("--aois", type=Path, default=Path("aois.json"))
-    apply.add_argument("--images", type=Path, default=Path("images"))
+    apply.add_argument("--aois", type=Path, default=Path("data/aois.json"))
+    apply.add_argument("--images", type=Path, default=Path("data"), help="folder the entry's image path is relative to")
     return parser
 
 

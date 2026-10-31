@@ -278,3 +278,24 @@ reason, and the alternatives considered.
   `docs/ANALYSIS_GUIDE.md`, because it now covers redesigns as well as new posts.
   The content is unchanged; the details are in `AOI_GENERATION.md` and
   `REDESIGN.md`.
+
+### D21 – Files reorganised: inputs, outputs, audit trail and doc images separated
+- **Decision:** Research inputs, outputs, the audit trail and doc-only images now
+  live in separate folders. Files were moved with `git mv`, so their history is
+  kept. The code defaults (`--images data`, `--aois data/aois.json`, staging and
+  attempt folders), the docs and the tests point to the new paths. Image paths in
+  `data/aois.json` are now relative to `data/`.
+- **Mapping (old → new):**
+  - `images/*_original.png` → `data/posts/`
+  - `images/post2_v1.png` → `data/redesigns/post2_v1.png`
+  - `aois.json` → `data/aois.json`
+  - `redesigns/` → `provenance/redesigns/`
+  - `aois_generated/` → `provenance/aois/`
+  - `docs/aois_v0_before_overlap_fix.json` → `provenance/aois/`
+- **Deleted** (seven resized copies of research files; the docs now link the
+  originals): `docs/img/guide/01_input.jpg`, `03_heatmap.jpg` and `04_aoi.jpg`,
+  and `docs/img/redesign/a_vs_b.jpg`, `attempt1_check.jpg`, `crop_strip.jpg` and
+  `final.jpg`. Nothing from the audit trail was deleted.
+- **Not changed:** the records inside `provenance/` and earlier D entries keep
+  the paths they had when written. Read them with the mapping above.
+- **Effect:** None on the numbers. A full re-run gives `results/` byte-identical.

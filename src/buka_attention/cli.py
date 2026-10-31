@@ -21,8 +21,10 @@ EPILOG = "Usage examples: README.md. Outputs and metric definitions: docs/METHOD
 def build_parser() -> argparse.ArgumentParser:
     """Return the argument parser; defaults match the layout of this repository."""
     parser = argparse.ArgumentParser(prog="python -m src.buka_attention", description=__doc__, epilog=EPILOG)
-    parser.add_argument("--images", type=Path, default=Path("images"), help="folder with the post images")
-    parser.add_argument("--aois", type=Path, default=Path("aois.json"), help="AOI spec file")
+    parser.add_argument(
+        "--images", type=Path, default=Path("data"), help="folder the image paths in the AOI file are relative to"
+    )
+    parser.add_argument("--aois", type=Path, default=Path("data/aois.json"), help="AOI spec file")
     parser.add_argument("--out", type=Path, default=Path("output"), help="output folder")
     parser.add_argument("--centerbias", type=Path, default=Path("centerbias_mit1003.npy"), help="MIT1003 prior")
     parser.add_argument("--only", nargs="*", help="process only these post keys")

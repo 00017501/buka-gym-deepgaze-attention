@@ -24,7 +24,7 @@ to and reproducible from this repo. Values are *predicted* attention, not eye-tr
 .venv/bin/ruff check . && .venv/bin/ruff format --check .
 .venv/bin/pytest -m "not slow"                # unit tests (seconds, no model)
 .venv/bin/pytest                              # + DeepGaze smoke test
-.venv/bin/python -m src.buka_attention --images images --aois aois.json --out output --centerbias centerbias_mit1003.npy
+.venv/bin/python -m src.buka_attention --images data --aois data/aois.json --out output --centerbias centerbias_mit1003.npy
 ```
 
 ## Layout
@@ -38,14 +38,18 @@ to and reproducible from this repo. Values are *predicted* attention, not eye-tr
 │   ├── stats.py      # AOI masks, shares, entropy, first-look ranks
 │   ├── visuals.py    # heatmap + AOI overlays (numpy/PIL)
 │   └── report.py     # CSV, Markdown tables, before/after comparison
+├── src/annotate/     # Claude AOI proposals (run) and adding reviewed entries (apply)
+├── src/redesign/     # OpenAI image-edit redesigns (generate) and fitting to post size (finalize)
 ├── tests/            # unit tests; test_smoke.py is marked `slow`
-├── aois.json         # AOI boxes per post (final version)
-├── images/           # original posts (Buka Gym's, not MIT-licensed)
+├── data/             # research inputs
+│   ├── posts/        # the five original posts (Buka Gym's, not MIT-licensed)
+│   ├── redesigns/    # finalised AI redesigns that are analysed
+│   └── aois.json     # AOI boxes per image (final version)
+├── prompts/          # exact AI prompts (redesign, AOI annotation)
+├── provenance/       # audit trail, never deleted: AI attempts, raw replies, records, superseded files
 ├── results/          # committed outputs cited by the report
-├── docs/METHOD.md    # method, metric definitions, limitations
-├── docs/DECISIONS.md # decision log D0..Dn
-├── docs/ANALYSIS_GUIDE.md # step-by-step guide to analysing a new post or redesign
-├── docs/AI_USE_AND_PROMPTS.md # where generative AI was used, and the prompts
+├── docs/             # METHOD, DECISIONS (D0..Dn), ANALYSIS_GUIDE, AOI_GENERATION, REDESIGN, AI_USE_AND_PROMPTS
+│   └── img/          # images made only for the docs
 └── patches/          # patch applied to the DeepGaze clone
 ```
 
@@ -63,13 +67,14 @@ to and reproducible from this repo. Values are *predicted* attention, not eye-tr
 
 - Any change that alters numbers or images in `results/`
 - New dependency, or changing a pinned version in `requirements.txt`
-- Editing `setup.sh`, `patches/`, `aois.json`, or the DeepGaze commit
+- Editing `setup.sh`, `patches/`, `data/aois.json`, or the DeepGaze commit
 - Editing `ruff.toml` or this `CLAUDE.md`
 
 ### 🚫 Never
 
 - Hand-edit files in `results/` - regenerate them
+- Delete or edit anything in `provenance/`
 - Edit or delete an existing `Dn` entry - add a new one
 - Add personal names or local file paths anywhere (D12)
-- Modify `images/`; posts are analysed as exported (D10)
+- Modify `data/posts/`; posts are analysed as exported (D10)
 - Add `# noqa` without an inline reason

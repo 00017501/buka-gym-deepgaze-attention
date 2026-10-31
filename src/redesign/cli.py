@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 DEFAULT_MODEL = "gpt-image-2.5-sunburst-2026-09-08"
 # Portrait output closest to the posts' 3:4 shape.
 DEFAULT_SIZE = "1024x1536"
-DEFAULT_ORIGINAL = Path("images/post2_taekwondo_kids_original.png")
+DEFAULT_ORIGINAL = Path("data/posts/post2_taekwondo_kids_original.png")
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -32,12 +32,12 @@ def build_parser() -> argparse.ArgumentParser:
     generate.add_argument("--size", default=DEFAULT_SIZE)
     generate.add_argument("--quality", default="high")
     generate.add_argument("--input-fidelity", choices=["high", "low"], help="only for models that accept it")
-    generate.add_argument("--out", type=Path, default=Path("redesigns"))
+    generate.add_argument("--out", type=Path, default=Path("provenance/redesigns"))
     generate.add_argument("--max-attempts", type=int, default=3)
 
-    finalize = commands.add_parser("finalize", help="fit a chosen attempt to the post size into images/")
-    finalize.add_argument("attempt", type=Path, help="e.g. redesigns/post2_v1_attempt1.png")
-    finalize.add_argument("--out", type=Path, help="default: images/<name>.png")
+    finalize = commands.add_parser("finalize", help="fit a chosen attempt to the post size into data/redesigns/")
+    finalize.add_argument("attempt", type=Path, help="e.g. provenance/redesigns/post2_v1_attempt1.png")
+    finalize.add_argument("--out", type=Path, help="default: data/redesigns/<name>.png")
     finalize.add_argument("--width", type=int, default=900)
     finalize.add_argument("--height", type=int, default=1199)
     finalize.add_argument(
@@ -61,7 +61,7 @@ def _run_generate(args: argparse.Namespace) -> None:
 def _run_finalize(args: argparse.Namespace) -> None:
     """Fit the chosen attempt to the post size and write its sidecar next to the attempt."""
     name = args.attempt.stem.rsplit("_attempt", 1)[0]
-    out = args.out or Path("images") / f"{name}.png"
+    out = args.out or Path("data/redesigns") / f"{name}.png"
     fit = crop_bottom if args.fit == "crop" else fit_and_pad
     record = fit(args.attempt, out, args.width, args.height)
     args.attempt.with_name(f"{name}_final.json").write_text(record.model_dump_json(indent=2), encoding="utf-8")
